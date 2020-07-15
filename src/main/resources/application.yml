@@ -3,15 +3,20 @@ server:
 
 spring:
   jpa:
-    database-platform: com.mobydigitalrrhh.configuration.SQLDialect
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:sqlite:spring-trainning-sqlite.db
-    driver-class-name: org.sqlite.JDBC
-    username: admin
-    password: admin 
-   
+    url: jdbc:mysql://us-cdbr-east-05.cleardb.net/heroku_55eeca3c59a95bf?reconnect=true
+    username: b0a8f5fed88e38
+    password: a755529a
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 476890059837-1bnb0vheu7ulrfq914ma0tnvi6plp4ai.apps.googleusercontent.com
+            client-secret: 0Mqb34KH8juRWh-Tocm2pykJ
+    
 oauth:
   clientId: 476890059837-1bnb0vheu7ulrfq914ma0tnvi6plp4ai.apps.googleusercontent.com # get a client-id from https://console.developers.google.com/
   clientSecret: 0Mqb34KH8juRWh-Tocm2pykJ # get a client-secret from https://console.developers.google.com/
@@ -19,3 +24,4 @@ oauth:
   userInfoUrl: https://www.googleapis.com/oauth2/v3/userinfo
   appTokenURI: /oauth/app_token
   secretKey: "mySecretKey"
+  
