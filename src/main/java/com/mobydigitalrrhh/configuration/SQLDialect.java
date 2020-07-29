@@ -9,7 +9,7 @@ import org.hibernate.dialect.function.VarArgsSQLFunction;
 import org.hibernate.Hibernate;
 import org.hibernate.type.StringType;
  
-//dialect
+//d
 
 public class SQLDialect extends Dialect {
     public SQLDialect() {
