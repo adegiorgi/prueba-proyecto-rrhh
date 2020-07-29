@@ -15,7 +15,8 @@ import com.mobydigitalrrhh.models.services.PersonaServiceImp;
 @RequestMapping(value = "/api")
 @RestController
 public class PersonaRestController {
-
+	
+	// Prueba commit en línea 19 - branch feature-adegiorgi
 	@Autowired
 	private PersonaServiceImp personaService;
 
