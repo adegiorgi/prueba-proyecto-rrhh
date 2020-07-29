@@ -16,7 +16,6 @@ import com.mobydigitalrrhh.models.services.PersonaServiceImp;
 @RestController
 public class PersonaRestController {
 	
-	// Prueba commit en línea 19 - branch feature-adegiorgi
 	@Autowired
 	private PersonaServiceImp personaService;
 
