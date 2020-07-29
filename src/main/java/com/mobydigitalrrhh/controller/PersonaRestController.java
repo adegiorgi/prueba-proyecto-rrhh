@@ -81,5 +81,4 @@ public class PersonaRestController {
 		respuesta.put("Mensaje", "La persona se eliminó con éxito.");
 		return new ResponseEntity<Object>(respuesta, HttpStatus.OK);
 	}
-	// asdasdasd
 }
