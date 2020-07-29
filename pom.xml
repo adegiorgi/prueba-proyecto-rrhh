@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>prueba-proyecto-rrhh</artifactId>
+	<artifactId>tablero-control-rrhh</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>prueba-proyecto-rrhh</name>
-	<description>Proyecto de prueba de RRHH.</description>
+	<name>tablero-control-rrhh</name>
+	<description>Proyecto de tablero de control de RRHH.</description>
 
 	<properties>
 		<java.version>1.8</java.version>
