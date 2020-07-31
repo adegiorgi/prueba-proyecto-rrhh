@@ -29,7 +29,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class TokenService {
-
+	
 	private final String JWT_HEADER = "Bearer ";
 	
 	@Autowired
@@ -44,8 +44,23 @@ public class TokenService {
 		return false;
 	}
 	
+	/*
+	 * En el método verifyTokenFromGoogle(), obtengo el "authorization token".
+	 */ 
+	
 	public UsernamePasswordAuthenticationToken verifyTokenFromGoogle(String token) {
-		String CLIENT_ID = oAuthProperties.getClientId();        
+		String CLIENT_ID = oAuthProperties.getClientId();
+		/*
+		 * Obtengo el "authorization token" y lo valido con GoogleChecker googleChecker como sigue:
+		 * Si, el token está validado, obtenemos información de perfil y preguntamos:
+		 * 		- Si, el email está registrado en nuestro sistema:
+		 * 			. Obtenemos información (nombre, roles, email, etc.).
+		 * 			. Retornamos un User.
+		 * 		- Si no:
+		 * 			. Guardo el nuevo usuario en la DB con un rol por defecto (Un admin en la app se va a encargar de asignar roles).
+		 * 		Ahora sí, voy a generar el nuevo token con la información del usuario.
+		 * 			. Retornamos un nuevo User.
+		 */
         GoogleChecker googleChecker = new GoogleChecker(new String[]{CLIENT_ID}, CLIENT_ID);
         
         GoogleIdToken.Payload jwtObject = googleChecker.check(token); 
@@ -68,6 +83,12 @@ public class TokenService {
 	}
 	
 	public String generateAppToken(String username) {
+		/*
+		 * En este método: 
+		 * 	1- Recibimos un usuario,
+		 * 	2- obtenemos la lista de roles, 
+		 * 	3- y las cargamos.
+		 */
 		List<GrantedAuthority> grantedAuthorities = AuthorityUtils
 				.commaSeparatedStringToAuthorityList("ROLE_USER");
 		
@@ -80,10 +101,14 @@ public class TokenService {
 								.map(GrantedAuthority::getAuthority)
 								.collect(Collectors.toList()))
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 600000))
+				.setExpiration(new Date(System.currentTimeMillis() + 600000)) // 600000 milisegundos son 10 minutos.
 				.signWith(SignatureAlgorithm.HS512,
 						oAuthProperties.getSecretKey().getBytes()).compact();
-
+		/*
+		 * Respondemos con el Bearer token.
+		 * Con esto, el front va a recibir un token y los pró´ximos POST o GET que nos envíen van a ir a una validación
+		 * que va a verificar el token que está navengando en la aplicación.
+		 */
 		return "Bearer " + token;
 	}
 	

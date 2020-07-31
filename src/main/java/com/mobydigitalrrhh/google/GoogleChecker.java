@@ -37,6 +37,9 @@ public class GoogleChecker {
         mVerifier = new GoogleIdTokenVerifier(transport, mJFactory);
     }
 
+    /*
+     * [MODIFICAR] El método check() valida el idToken en vez del authToken.
+     */
     public GoogleIdToken.Payload check(String tokenString) {
         GoogleIdToken.Payload payload = null;
         try {

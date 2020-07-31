@@ -37,10 +37,19 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				anyRequest().authenticated().and().
 				exceptionHandling()
 				.and()
+				/*
+				 * Cuando pasamos por el PRIMER FILTRO (JwtRequestFilter), vamos al SEGUNDO FILTRO (AuthorizationFilter)
+				 * para verificar si el usuario está en la DB como sigue.
+				 * 
+				 * El "authorizationFilter" lo que hace es: averiguar si el token que recibimos está autorizado o no.
+				 */
 				.addFilterAfter(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);		
 	}
 	
+	/*
+	 * Este filtro únicamente va a funcionar para la request que viene desde "/oauth/app_token"
+	 */
 	@Bean
 	public FilterRegistrationBean<Filter> appTokenFilter() {
 		FilterRegistrationBean<Filter> frb = new FilterRegistrationBean<>();
