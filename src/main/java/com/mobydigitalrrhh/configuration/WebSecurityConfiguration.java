@@ -12,7 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import com.mobydigitalrrhh.filter.AuthorizationFilter;
 import com.mobydigitalrrhh.filter.JwtRequestFilter;
 
@@ -47,8 +49,23 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);		
 	}
 	
+	@Bean
+	public FilterRegistrationBean<Filter> corsFilter() {
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		CorsConfiguration config = new CorsConfiguration();
+		config.setAllowCredentials(true);
+		config.addAllowedOrigin("http://localhost:4200");
+		config.addAllowedHeader("*");
+		config.addAllowedMethod("*");
+		source.registerCorsConfiguration("/**", config);
+		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<Filter>(new CorsFilter(source));
+		bean.setOrder(0);
+		return bean;
+	}
+	
 	/*
-	 * Este filtro únicamente va a funcionar para la request que viene desde "/oauth/app_token"
+	 * El filtro siguiente generado por el método appTokenFilter() 
+	 * únicamente va a funcionar para la request que viene desde "/oauth/app_token"
 	 */
 	@Bean
 	public FilterRegistrationBean<Filter> appTokenFilter() {
