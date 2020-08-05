@@ -49,7 +49,6 @@ public class TokenService {
 	 */ 
 	
 	public UsernamePasswordAuthenticationToken verifyTokenFromGoogle(String token) {
-<<<<<<< HEAD
 		String CLIENT_ID = oAuthProperties.getClientId();
 		/*
 		 * Obtengo el "authorization token" y lo valido con GoogleChecker googleChecker como sigue:
@@ -62,10 +61,7 @@ public class TokenService {
 		 * 		Ahora sí, voy a generar el nuevo token con la información del usuario.
 		 * 			. Retornamos un nuevo User.
 		 */
-=======
 		System.out.println(token);
-		String CLIENT_ID = oAuthProperties.getClientId();        
->>>>>>> branch 'dev' of https://github.com/adegiorgi/tablero-control-rrhh.git
         GoogleChecker googleChecker = new GoogleChecker(new String[]{CLIENT_ID}, CLIENT_ID);
         
         GoogleIdToken.Payload jwtObject = googleChecker.check(token); 

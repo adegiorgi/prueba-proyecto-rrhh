@@ -12,14 +12,14 @@ import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "tipoestudios")
-public class TipoEstudios implements Serializable {
+public class TipoEstudio implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_tipo_estudio")
 	private Integer idTipoEstudio;
 
-	@NotBlank
+	@NotBlank(message = "El campo descripción no puede estar vacío")
 	private String descripcion;
 
 	public Integer getIdTipoEstudio() {

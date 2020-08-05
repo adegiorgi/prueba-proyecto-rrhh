@@ -11,6 +11,7 @@ public class Educacion implements Serializable {
 
 	@Id
 	@Column(name = "id_educacion")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idEducacion;
 
 	private TipoEstudio tipoEstudio;

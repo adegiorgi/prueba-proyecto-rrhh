@@ -13,11 +13,11 @@ public class CandidatoPorSoftSkill implements Serializable {
 	@Column(name = "id_candidato_x_softskill")
 	private Integer idCandidatoXSoftSkill;
 
-	private SoftSkill softSkill;
+	@JoinColumn(name = "id_tipo_soft_skill", referencedColumnName = "id_tipo_soft_skill")
+	private TipoSoftSkill tipoSoftSkill;
 
+	@JoinColumn(name = "id_candidato", referencedColumnName = "id_candidato")
 	private Candidato candidato;
-
-	
 	
 	public Integer getIdCandidatoXSoftSkill() {
 		return idCandidatoXSoftSkill;
@@ -27,12 +27,12 @@ public class CandidatoPorSoftSkill implements Serializable {
 		this.idCandidatoXSoftSkill = idCandidatoXSoftSkill;
 	}
 
-	public SoftSkill getSoftSkill() {
-		return softSkill;
+	public TipoSoftSkill getSoftSkill() {
+		return tipoSoftSkill;
 	}
 
-	public void setSoftSkill(SoftSkill softSkill) {
-		this.softSkill = softSkill;
+	public void setSoftSkill(TipoSoftSkill tipoSoftSkill) {
+		this.tipoSoftSkill = tipoSoftSkill;
 	}
 
 	public Candidato getCandidato() {
