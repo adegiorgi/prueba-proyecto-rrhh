@@ -45,6 +45,7 @@ public class TokenService {
 	}
 	
 	public UsernamePasswordAuthenticationToken verifyTokenFromGoogle(String token) {
+		System.out.println(token);
 		String CLIENT_ID = oAuthProperties.getClientId();        
         GoogleChecker googleChecker = new GoogleChecker(new String[]{CLIENT_ID}, CLIENT_ID);
         
@@ -56,6 +57,7 @@ public class TokenService {
         }
         return null;
 	}
+
 	
 	public UsernamePasswordAuthenticationToken verifyAppToken(String token) {
 		//{jti=softtekJWT, sub=igutierrez@mobydigital.com, authorities=[ROLE_USER], iat=1594690351, exp=1594690951}
