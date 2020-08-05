@@ -6,15 +6,13 @@ import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
-import com.mobydigitalrrhh.configuration.OAuthProperties;
+
+import antlr.ASdebug.ASDebugStream;
 
 
 public class GoogleChecker {
@@ -27,12 +25,13 @@ public class GoogleChecker {
     private final JsonFactory mJFactory;
     private String mProblem = "Verification failed. (Time-out?)";
 
-  
+   
     
     public GoogleChecker(String[] clientIDs, String audience) {
         mClientIDs = Arrays.asList(clientIDs);
         mAudience = audience;
         NetHttpTransport transport = new NetHttpTransport();
+        
         mJFactory = new GsonFactory();
         mVerifier = new GoogleIdTokenVerifier(transport, mJFactory);
     }
@@ -60,6 +59,8 @@ public class GoogleChecker {
         }
         return payload;
     }
+    
+ 
 
     public String problem() {
         return mProblem;
