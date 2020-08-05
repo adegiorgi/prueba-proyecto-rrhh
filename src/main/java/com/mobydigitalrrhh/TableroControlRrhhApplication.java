@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MockupProyectoRrhhApplication {
+public class TableroControlRrhhApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MockupProyectoRrhhApplication.class, args);
+		SpringApplication.run(TableroControlRrhhApplication.class, args);
 	}
 	
 }
