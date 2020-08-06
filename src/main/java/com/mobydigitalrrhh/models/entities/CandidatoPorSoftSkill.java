@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,29 +20,29 @@ public class CandidatoPorSoftSkill implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_candidato_x_softskill")
-	private Integer idCandidatoXSoftSkill;
+	private Integer idCandidatoPorSoftSkill;
 
 	@JoinColumn(name = "id_tipo_soft_skill", referencedColumnName = "id_tipo_soft_skill")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private TipoSoftSkill tipoSoftSkill;
 
 	@JoinColumn(name = "id_candidato", referencedColumnName = "id_candidato")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Candidato candidato;
-	
-	public Integer getIdCandidatoXSoftSkill() {
-		return idCandidatoXSoftSkill;
+
+	public Integer getIdCandidatoPorSoftSkill() {
+		return idCandidatoPorSoftSkill;
 	}
 
-	public void setIdCandidatoXSoftSkill(Integer idCandidatoXSoftSkill) {
-		this.idCandidatoXSoftSkill = idCandidatoXSoftSkill;
+	public void setIdCandidatoPorSoftSkill(Integer idCandidatoPorSoftSkill) {
+		this.idCandidatoPorSoftSkill = idCandidatoPorSoftSkill;
 	}
 
-	public TipoSoftSkill getSoftSkill() {
+	public TipoSoftSkill getTipoSoftSkill() {
 		return tipoSoftSkill;
 	}
 
-	public void setSoftSkill(TipoSoftSkill tipoSoftSkill) {
+	public void setTipoSoftSkill(TipoSoftSkill tipoSoftSkill) {
 		this.tipoSoftSkill = tipoSoftSkill;
 	}
 

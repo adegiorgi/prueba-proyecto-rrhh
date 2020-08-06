@@ -16,7 +16,7 @@ public class EntrevistadorPorEntrevista implements Serializable {
 
 	@Id
 	@Column(name = "id_entrevistador_x_entrevista")
-	private Integer idEntrevistadorXEntrevista;
+	private Integer idEntrevistadorPorEntrevista;
 
 	@JoinColumn(name = "id_entrevista", referencedColumnName = "id_entrevista")
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -25,16 +25,15 @@ public class EntrevistadorPorEntrevista implements Serializable {
 	@JoinColumn(name = "id_entrevistador", referencedColumnName = "id_entrevistador")
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Entrevistador entrevistador;
-
 	
 	private String observacion;
 
-	public Integer getIdEntrevistadorXEntrevista() {
-		return idEntrevistadorXEntrevista;
+	public Integer getIdEntrevistadorPorEntrevista() {
+		return idEntrevistadorPorEntrevista;
 	}
 
-	public void setIdEntrevistadorXEntrevista(Integer idEntrevistadorXEntrevista) {
-		this.idEntrevistadorXEntrevista = idEntrevistadorXEntrevista;
+	public void setIdEntrevistadorPorEntrevista(Integer idEntrevistadorPorEntrevista) {
+		this.idEntrevistadorPorEntrevista = idEntrevistadorPorEntrevista;
 	}
 
 	public Entrevista getEntrevista() {

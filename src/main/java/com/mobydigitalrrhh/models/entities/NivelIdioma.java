@@ -22,15 +22,15 @@ public class NivelIdioma implements Serializable {
 
 	private String descripcion;
 
-	@OneToMany(mappedBy = "idioma")
-	private List<Idioma> idiomas;
-
-	public List<Idioma> getIdiomas() {
-		return idiomas;
+	@OneToMany(mappedBy = "nivelIdioma")
+	private List<IdiomaPorCandidato> idiomaPorCandidatos;
+	
+	public List<IdiomaPorCandidato> getIdiomaPorCandidatos() {
+		return idiomaPorCandidatos;
 	}
 
-	public void setIdiomas(List<Idioma> idiomas) {
-		this.idiomas = idiomas;
+	public void setIdiomaPorCandidatos(List<IdiomaPorCandidato> idiomaPorCandidatos) {
+		this.idiomaPorCandidatos = idiomaPorCandidatos;
 	}
 
 	public Integer getIdNivelIdioma() {
