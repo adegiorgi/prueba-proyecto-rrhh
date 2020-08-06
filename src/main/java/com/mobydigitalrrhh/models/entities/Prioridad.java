@@ -2,7 +2,6 @@ package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +22,7 @@ public class Prioridad implements Serializable {
 
 	@NotBlank(message = "El campo nombre no puede estar vacío")
 	private String nombre;
+
 
 	@OneToMany(mappedBy = "prioridad")
 	private List<Busqueda> busquedas;

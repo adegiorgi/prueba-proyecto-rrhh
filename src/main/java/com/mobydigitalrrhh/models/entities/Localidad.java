@@ -1,6 +1,7 @@
 package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import javax.validation.constraints.NotBlank;
@@ -30,6 +32,17 @@ public class Localidad implements Serializable {
 	@JoinColumn(name = "id_provincia", referencedColumnName = "id_provincia")
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Provincia provincia;
+
+	@OneToMany(mappedBy = "localidad", fetch = FetchType.LAZY)
+	private List<Candidato> candidatos;
+
+	public List<Candidato> getCandidatos() {
+		return candidatos;
+	}
+
+	public void setCandidatos(List<Candidato> candidatos) {
+		this.candidatos = candidatos;
+	}
 
 	public Integer getIdLocalidad() {
 		return idLocalidad;

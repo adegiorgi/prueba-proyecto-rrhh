@@ -1,6 +1,7 @@
 package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,7 +14,7 @@ public class HardSkill implements Serializable {
 	@Column(name = "id_hardskill")
 	private Integer idHardSkill;
 
-	@NotBlank (message = "el campo nombre debe tener almenos un caracter")
+	@NotBlank (message = "El campo nombre no puede estar vacío")
 	private String nombre;
 
 	@JoinColumn(name = "id_seniority", referencedColumnName = "id_seniority")
@@ -23,6 +24,18 @@ public class HardSkill implements Serializable {
 	@JoinColumn(name = "id_tipo_hardskill", referencedColumnName = "id_tipo_hardskill")
 	@ManyToOne
 	private TipoHardSkill tipoHardSkill;
+
+	@OneToMany (mappedBy = "hardSkill" , fetch = FetchType.LAZY)
+	private List <CandidatoPorHardSkill> candidatosPorHardSkill;
+	
+	
+	public List<CandidatoPorHardSkill> getCandidatosPorHardSkill() {
+		return candidatosPorHardSkill;
+	}
+
+	public void setCandidatosPorHardSkill(List<CandidatoPorHardSkill> candidatosPorHardSkill) {
+		this.candidatosPorHardSkill = candidatosPorHardSkill;
+	}
 
 	public Integer getIdHardSkill() {
 		return idHardSkill;

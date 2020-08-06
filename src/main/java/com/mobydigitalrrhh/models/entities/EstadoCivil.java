@@ -1,6 +1,7 @@
 package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -16,6 +17,18 @@ public class EstadoCivil implements Serializable {
 
 	@NotBlank(message = "El campo descripción no puede estar vacío")
 	private String descripcion;
+
+	@OneToMany(mappedBy = "estadoCivil", fetch=FetchType.LAZY)
+	private List<Candidato> candidatos;
+	
+	
+	public List<Candidato> getCandidatos() {
+		return candidatos;
+	}
+
+	public void setCandidatos(List<Candidato> candidatos) {
+		this.candidatos = candidatos;
+	}
 
 	public Integer getIdEstadoCivil() {
 		return idEstadoCivil;

@@ -3,7 +3,18 @@ package com.mobydigitalrrhh.models.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+
 
 @Entity
 @Table(name = "busquedas")
@@ -15,25 +26,29 @@ public class Busqueda implements Serializable {
 	private Integer idBusqueda;
 
 	@JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Empresa empresa;
 
 	@JoinColumn(name = "id_prioridad", referencedColumnName = "id_prioridad")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Prioridad prioridad;
 
 	@JoinColumn(name = "id_provincia", referencedColumnName = "id_provincia")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Provincia provincia;
 
 	@JoinColumn(name = "id_equipo", referencedColumnName = "id_equipo")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Equipo equipo;
 
+	@NotBlank(message = "El campo fechaInicio no puede quedar vacío")
+	@Column(name = "fecha_inicio")
 	private Date fechaInicio;
 
+	@Column(name = "fecha_limite")
 	private Date fechaLimite;
 
+	@NotBlank(message = "El campo pendiente no puede quedar vacío")
 	private boolean pendiente;
 
 	public Integer getIdBusqueda() {

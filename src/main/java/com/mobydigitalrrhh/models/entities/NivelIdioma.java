@@ -19,12 +19,12 @@ public class NivelIdioma implements Serializable {
 	@Column(name = "id_nivel_idioma")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idNivelIdioma;
-	
+
 	private String descripcion;
 
 	@OneToMany(mappedBy = "idioma")
 	private List<Idioma> idiomas;
-	
+
 	public List<Idioma> getIdiomas() {
 		return idiomas;
 	}
