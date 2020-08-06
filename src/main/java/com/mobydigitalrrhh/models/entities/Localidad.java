@@ -35,6 +35,17 @@ public class Localidad implements Serializable {
 
 	@OneToMany(mappedBy = "localidad", fetch = FetchType.LAZY)
 	private List<Candidato> candidatos;
+	
+	@OneToMany(mappedBy = "localidad", fetch = FetchType.LAZY)
+	private List<Empresa> empresas;
+	
+	public List<Empresa> getEmpresas() {
+		return empresas;
+	}
+
+	public void setEmpresas(List<Empresa> empresas) {
+		this.empresas = empresas;
+	}
 
 	public List<Candidato> getCandidatos() {
 		return candidatos;

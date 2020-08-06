@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,15 +24,15 @@ public class Educacion implements Serializable {
 	private Integer idEducacion;
 
 	@JoinColumn(name = "id_tipo_esudio", referencedColumnName = "id_tipo_estudio")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private TipoEstudio tipoEstudio;
 
 	@JoinColumn(name = "id_institucion", referencedColumnName = "id_institucion")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Institucion institucion;
 
 	@JoinColumn(name = "id_candidato", referencedColumnName = "id_candidato")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Candidato candidato;
 
 	private boolean estado;
@@ -42,6 +43,7 @@ public class Educacion implements Serializable {
 
 	@Column (name = "fecha_inicio")
 	private Date fechaInicio;
+	
 	@Column (name = "fecha_fin")
 	private Date fechaFin;
 

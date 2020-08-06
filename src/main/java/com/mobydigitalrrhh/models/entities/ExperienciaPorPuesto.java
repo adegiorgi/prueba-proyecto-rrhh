@@ -3,7 +3,16 @@ package com.mobydigitalrrhh.models.entities;
 import java.io.Serializable;
 import java.sql.Date;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "experienciaxpuesto")
@@ -15,11 +24,15 @@ public class ExperienciaPorPuesto implements Serializable {
 	private Integer idExperienciaPorPuesto;
 
 	@JoinColumn(name = "id_experiencia", referencedColumnName = "id_experiencia")
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Experiencia experiencia;
 
 	@JoinColumn(name = "id_puesto", referencedColumnName = "id_puesto")
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Puesto puesto;
+	
 	private Date fechaInicio;
+	
 	private Date fechaFin;
 
 	public Integer getIdExperienciaPorPuesto() {

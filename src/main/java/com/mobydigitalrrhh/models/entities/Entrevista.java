@@ -2,13 +2,14 @@ package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
 import java.sql.Date;
-
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -31,6 +32,17 @@ public class Entrevista implements Serializable {
 
 	@Column(name = "pretension_salarial", scale = 2)
 	private Float pretensionSalarial;
+	
+	@OneToMany(mappedBy = "entrevista")
+	private List<EntrevistadorPorEntrevista> entrevistadorPorEntrevistas;
+	
+	public List<EntrevistadorPorEntrevista> getEntrevistadorPorEntrevistas() {
+		return entrevistadorPorEntrevistas;
+	}
+
+	public void setEntrevistadorPorEntrevistas(List<EntrevistadorPorEntrevista> entrevistadorPorEntrevistas) {
+		this.entrevistadorPorEntrevistas = entrevistadorPorEntrevistas;
+	}
 
 	public Integer getIdEntrevista() {
 		return idEntrevista;

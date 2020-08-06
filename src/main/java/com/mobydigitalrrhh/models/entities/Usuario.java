@@ -1,19 +1,15 @@
 package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
-import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "usuarios")
@@ -36,9 +32,20 @@ public class Usuario implements Serializable {
 
 	@NotBlank(message = "El campo token no puede estar vacío")
 	private String token;
+	
+	@OneToMany(mappedBy = "usuario")
+	private List<Entrevista> entrevistadores;
 
-	@OneToMany(mappedBy = "usuario", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "usuario")
 	private List<UsuarioPorRol> usuarioPorRoles;
+
+	public List<Entrevista> getEntrevistadores() {
+		return entrevistadores;
+	}
+
+	public void setEntrevistadores(List<Entrevista> entrevistadores) {
+		this.entrevistadores = entrevistadores;
+	}
 
 	public List<UsuarioPorRol> getUsuarioPorRoles() {
 		return usuarioPorRoles;

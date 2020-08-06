@@ -3,7 +3,15 @@ package com.mobydigitalrrhh.models.entities;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -18,17 +26,16 @@ public class HardSkill implements Serializable {
 	private String nombre;
 
 	@JoinColumn(name = "id_seniority", referencedColumnName = "id_seniority")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Seniority seniority;
 
 	@JoinColumn(name = "id_tipo_hardskill", referencedColumnName = "id_tipo_hardskill")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private TipoHardSkill tipoHardSkill;
 
-	@OneToMany (mappedBy = "hardSkill" , fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "hardSkill" , fetch = FetchType.LAZY)
 	private List <CandidatoPorHardSkill> candidatosPorHardSkill;
-	
-	
+
 	public List<CandidatoPorHardSkill> getCandidatosPorHardSkill() {
 		return candidatosPorHardSkill;
 	}

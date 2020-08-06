@@ -23,7 +23,6 @@ public class Prioridad implements Serializable {
 	@NotBlank(message = "El campo nombre no puede estar vacío")
 	private String nombre;
 
-
 	@OneToMany(mappedBy = "prioridad")
 	private List<Busqueda> busquedas;
 

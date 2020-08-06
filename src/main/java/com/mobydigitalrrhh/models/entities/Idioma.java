@@ -1,8 +1,15 @@
 package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -17,6 +24,17 @@ public class Idioma implements Serializable {
 	@NotBlank(message = "El campo idioma no puede estar vacío")
 	private String nombre;
 	
+	@OneToMany(mappedBy = "idioma")
+	private List<IdiomaPorCandidato> idiomaPorCandidatos;
+	
+	public List<IdiomaPorCandidato> getIdiomaPorCandidatos() {
+		return idiomaPorCandidatos;
+	}
+
+	public void setIdiomaPorCandidatos(List<IdiomaPorCandidato> idiomaPorCandidatos) {
+		this.idiomaPorCandidatos = idiomaPorCandidatos;
+	}
+
 	public Integer getIdIdioma() {
 		return idIdioma;
 	}

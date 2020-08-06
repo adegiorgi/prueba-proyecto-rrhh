@@ -33,18 +33,26 @@ public class Empresa implements Serializable {
 
 	@NotBlank(message = "El campo teléfono no puede estar vacío")
 	private String telefono;
-
 	
 	private String direccion;
 
 	@JoinColumn(name = "id_localidad", referencedColumnName = "id_localidad")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Localidad localidad;
 
 	@OneToMany(mappedBy = "empresa", fetch=FetchType.LAZY)
 	private List<Busqueda> busquedas;
-
 	
+	@OneToMany(mappedBy = "empresa", fetch=FetchType.LAZY)
+	private List<Experiencia> experiencias;
+	
+	public List<Experiencia> getExperiencias() {
+		return experiencias;
+	}
+
+	public void setExperiencias(List<Experiencia> experiencias) {
+		this.experiencias = experiencias;
+	}
 
 	public List<Busqueda> getBusquedas() {
 		return busquedas;

@@ -2,8 +2,17 @@ package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -35,6 +44,17 @@ public class Experiencia implements Serializable {
 	
 	@NotBlank(message = "El campo actual no puede estar vacío")
 	private boolean actual;
+	
+	@OneToMany(mappedBy = "experiencia")
+	private List<ExperienciaPorPuesto> experienciaPorPuestos;
+
+	public List<ExperienciaPorPuesto> getExperienciaPorPuestos() {
+		return experienciaPorPuestos;
+	}
+
+	public void setExperienciaPorPuestos(List<ExperienciaPorPuesto> experienciaPorPuestos) {
+		this.experienciaPorPuestos = experienciaPorPuestos;
+	}
 
 	public Integer getIdExperiencia() {
 		return idExperiencia;

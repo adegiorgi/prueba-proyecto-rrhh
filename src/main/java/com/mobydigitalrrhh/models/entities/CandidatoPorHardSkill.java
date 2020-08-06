@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,26 +20,26 @@ public class CandidatoPorHardSkill implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_candidato_x_hardskill")
-	private Integer idCandidatoXHardSkill;
+	private Integer idCandidatoPorHardSkill;
 
-	@JoinColumn(name = "id_candidato",referencedColumnName = "id_candidato")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_candidato", referencedColumnName = "id_candidato")
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Candidato candidato;
-	
-	@JoinColumn(name = "id_hard_skill",referencedColumnName = "id_hard_skill")
-	@ManyToOne(cascade = CascadeType.ALL)
+
+	@JoinColumn(name = "id_hard_skill", referencedColumnName = "id_hard_skill")
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private HardSkill hardSkill;
 
 	private String observacion;
 
 	private Integer anios;
 
-	public Integer getIdCandidatoXHardSkill() {
-		return idCandidatoXHardSkill;
+	public Integer getIdCandidatoPorHardSkill() {
+		return idCandidatoPorHardSkill;
 	}
 
-	public void setIdCandidatoXHardSkill(Integer idCandidatoXHardSkill) {
-		this.idCandidatoXHardSkill = idCandidatoXHardSkill;
+	public void setIdCandidatoPorHardSkill(Integer idCandidatoPorHardSkill) {
+		this.idCandidatoPorHardSkill = idCandidatoPorHardSkill;
 	}
 
 	public Candidato getCandidato() {
