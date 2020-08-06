@@ -2,7 +2,12 @@ package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -15,8 +20,8 @@ public class Institucion implements Serializable {
 	private Integer idInstitucion;
 
 	@Column(name = "nombre_institucion")
-	@NotBlank(message = "El campo nombre de no puede ser nulo")
-	private String nombreInstitucion;
+	@NotBlank(message = "El campo nombre no puede estar vacío")
+	private String nombre;
 
 	public Integer getIdInstitucion() {
 		return idInstitucion;
@@ -26,12 +31,12 @@ public class Institucion implements Serializable {
 		this.idInstitucion = idInstitucion;
 	}
 
-	public String getNombreInstitucion() {
-		return nombreInstitucion;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setNombreInstitucion(String nombreInstitucion) {
-		this.nombreInstitucion = nombreInstitucion;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	private static final long serialVersionUID = 1L;

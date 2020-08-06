@@ -8,10 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "Seniority")
+@Table(name = "seniority")
 public class Seniority implements Serializable {
 
 	@Id
@@ -19,10 +20,8 @@ public class Seniority implements Serializable {
 	@Column(name = "id_seniority")
 	private Integer idSeniority;
 
-	@NotBlank(message = "el campo descripcion debe tener almenos un caracter")
+	@NotBlank(message = "El campo descripción no puede estar vacío")
 	private String descripcion;
-
-	
 	
 	public Integer getIdSeniority() {
 		return idSeniority;

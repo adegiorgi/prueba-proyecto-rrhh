@@ -2,7 +2,17 @@ package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -14,11 +24,11 @@ public class Localidad implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idLocalidad;
 
-	@NotBlank(message = "El campo nombre de localidad no puede estar vacío")
+	@NotBlank(message = "El campo nombre no puede estar vacío")
 	private String nombre;
 
 	@JoinColumn(name = "id_provincia", referencedColumnName = "id_provincia")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Provincia provincia;
 
 	public Integer getIdLocalidad() {

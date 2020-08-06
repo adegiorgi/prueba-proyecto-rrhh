@@ -2,7 +2,16 @@ package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "puestoxcandidato")
@@ -14,9 +23,11 @@ public class PuestoPorCandidato implements Serializable {
 	private Integer idPuestoPorCandidato;
 
 	@JoinColumn(name = "id_puesto", referencedColumnName = "id_puesto")
-	private Puesto puesto; 
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Puesto puesto;
 
 	@JoinColumn(name = "id_candidato", referencedColumnName = "id_candidato")
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Candidato candidato;
 
 	public Integer getIdPuestoPorCandidato() {
