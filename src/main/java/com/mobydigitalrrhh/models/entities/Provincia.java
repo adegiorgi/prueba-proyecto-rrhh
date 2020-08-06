@@ -3,8 +3,15 @@ package com.mobydigitalrrhh.models.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -18,11 +25,9 @@ public class Provincia implements Serializable {
 
 	@NotBlank(message = "El campo nombre no puede estar vacío")
 	private String nombre;
-	
-	@OneToMany(mappedBy = "provincia", fetch=FetchType.LAZY)
-	private List<Busqueda> busquedas ;
-	
-	
+
+	@OneToMany(mappedBy = "provincia", fetch = FetchType.LAZY)
+	private List<Busqueda> busquedas;
 
 	public List<Busqueda> getBusquedas() {
 		return busquedas;
@@ -30,6 +35,17 @@ public class Provincia implements Serializable {
 
 	public void setBusquedas(List<Busqueda> busquedas) {
 		this.busquedas = busquedas;
+	}
+
+	@OneToMany(mappedBy = "provincia")
+	private List<Localidad> localidades;
+
+	public List<Localidad> getLocalidades() {
+		return localidades;
+	}
+
+	public void setLocalidades(List<Localidad> localidades) {
+		this.localidades = localidades;
 	}
 
 	public Integer getIdProvincia() {

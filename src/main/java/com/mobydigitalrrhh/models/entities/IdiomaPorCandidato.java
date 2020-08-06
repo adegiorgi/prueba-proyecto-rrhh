@@ -1,8 +1,6 @@
 package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -16,15 +14,15 @@ public class IdiomaPorCandidato implements Serializable {
 	private Integer idIdiomaPorCandidato;
 
 	@JoinColumn(name = "id_idioma", referencedColumnName = "id_idioma")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Idioma idioma;
 
 	@JoinColumn(name = "id_nivel_idioma", referencedColumnName = "id_nivel_idioma")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private NivelIdioma nivelIdioma;
 
 	@JoinColumn(name = "id_candidato", referencedColumnName = "id_candidato")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Candidato candidato;
 	
 	public Integer getIdIdiomaPorCandidato() {

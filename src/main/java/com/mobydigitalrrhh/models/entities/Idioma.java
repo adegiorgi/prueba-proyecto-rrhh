@@ -16,7 +16,7 @@ public class Idioma implements Serializable {
 	
 	@NotBlank(message = "El campo idioma no puede estar vacío")
 	private String nombre;
-
+	
 	public Integer getIdIdioma() {
 		return idIdioma;
 	}

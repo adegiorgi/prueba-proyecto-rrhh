@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "experienciaxpuesto")
