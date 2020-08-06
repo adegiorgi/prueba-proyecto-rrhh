@@ -41,4 +41,3 @@ oauth:
   userInfoUrl: https://www.googleapis.com/oauth2/v3/userinfo
   appTokenURI: /oauth/app_token
   secretKey: "mySecretKey"
-  

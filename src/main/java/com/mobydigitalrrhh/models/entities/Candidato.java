@@ -2,11 +2,25 @@ package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "candidatos")
+
+//ver MOCKUP, falta "perfilado"
 public class Candidato implements Serializable {
 
 	@Id
@@ -16,26 +30,37 @@ public class Candidato implements Serializable {
 
 	private Integer dni;
 
-	private String nombre;
+	@NotEmpty(message = "El campo nombreyApellido no puede quedar vacío")
+	@Column(name = "nombre_completo")
+	private String nombreCompleto;
 
-	private String apellido;
-
+	@NotEmpty(message = "El campo telefono no puede quedar vacío")
 	private String telefono;
 
+	@JoinColumn(name = "id_estado_civil", referencedColumnName = "id_estado_civil")
+	@ManyToOne(cascade = CascadeType.ALL)
 	private EstadoCivil estadoCivil;
 
+	@JoinColumn(name = "id_localidad", referencedColumnName = "id_localidad")
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Localidad localidad;
 
+	@JoinColumn(name = "id_origen_contacto", referencedColumnName = "id_origen_contacto")
+	@ManyToOne(cascade = CascadeType.ALL)
 	private OrigenContacto origenContacto;
 
 	private String domicilio;
 
-	private float pretensionEconomica; // falta anotacion decimales
+	@Column(name = "pretension_economica", scale = 2)
+	private float pretensionEconomica;
 
+	@Column(name = "disponibilidad_viaje")
 	private boolean disponibilidadViaje;
 
+	@Column(name = "disponibilidad_remoto")
 	private boolean disponibilidadRemoto;
 
+	@Column(name = "disponibilidad_reubicacion")
 	private boolean disponibilidadReubicacion;
 
 	private String linkedin;
@@ -44,12 +69,39 @@ public class Candidato implements Serializable {
 
 	private String observacion;
 
+	@Column(name = "fecha_nacimiento")
 	private Date fecNac;
 
+	@Column(name = "anios_experiencia")
 	private Integer aniosExperiencia;
 
-	public Integer getIdCandidato() {
+	@OneToMany(mappedBy = "candidato", fetch = FetchType.LAZY)
+	private List <CandidatoPorHardSkill> candidatosPorHardSkill;
+	
+	
+	@OneToMany(mappedBy = "candidato", fetch = FetchType.LAZY)
+	private List <CandidatoPorSoftSkill> candidatosPorSoftSkill;
+	
+	
+	
+	
+	public List<CandidatoPorSoftSkill> getCandidatosPorSoftSkill() {
+		return candidatosPorSoftSkill;
+	}
 
+	public void setCandidatosPorSoftSkill(List<CandidatoPorSoftSkill> candidatosPorSoftSkill) {
+		this.candidatosPorSoftSkill = candidatosPorSoftSkill;
+	}
+
+	public List<CandidatoPorHardSkill> getCandidatosPorHardSkill() {
+		return candidatosPorHardSkill;
+	}
+
+	public void setCandidatosPorHardSkill(List<CandidatoPorHardSkill> candidatosPorHardSkill) {
+		this.candidatosPorHardSkill = candidatosPorHardSkill;
+	}
+
+	public Integer getIdCandidato() {
 		return idCandidato;
 	}
 
@@ -65,20 +117,12 @@ public class Candidato implements Serializable {
 		this.dni = dni;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getNombreCompleto() {
+		return nombreCompleto;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getApellido() {
-		return apellido;
-	}
-
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public void setNombreCompleto(String nombreCompleto) {
+		this.nombreCompleto = nombreCompleto;
 	}
 
 	public String getTelefono() {

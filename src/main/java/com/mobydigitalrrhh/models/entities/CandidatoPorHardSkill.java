@@ -2,7 +2,15 @@ package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "candidatoXHardSkill")
@@ -13,8 +21,12 @@ public class CandidatoPorHardSkill implements Serializable {
 	@Column(name = "id_candidato_x_hardskill")
 	private Integer idCandidatoXHardSkill;
 
+	@JoinColumn(name = "id_candidato",referencedColumnName = "id_candidato")
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Candidato candidato;
-
+	
+	@JoinColumn(name = "id_hard_skill",referencedColumnName = "id_hard_skill")
+	@ManyToOne(cascade = CascadeType.ALL)
 	private HardSkill hardSkill;
 
 	private String observacion;

@@ -1,6 +1,7 @@
 package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -16,6 +17,19 @@ public class TipoSoftSkill implements Serializable {
 	
 	@NotBlank(message = "El campo de tipo de skill no puede estar vacío")
 	private String tipoSkill;
+	
+	@OneToMany (mappedBy = "tipoSoftSkill", fetch = FetchType.LAZY)
+	private List <CandidatoPorSoftSkill> candidatosPorSoftSkill;
+	
+
+	
+	public List<CandidatoPorSoftSkill> getCandidatosPorSoftSkill() {
+		return candidatosPorSoftSkill;
+	}
+
+	public void setCandidatosPorSoftSkill(List<CandidatoPorSoftSkill> candidatosPorSoftSkill) {
+		this.candidatosPorSoftSkill = candidatosPorSoftSkill;
+	}
 
 	public Integer getIdTipoSoftSkill() {
 		return idTipoSoftSkill;

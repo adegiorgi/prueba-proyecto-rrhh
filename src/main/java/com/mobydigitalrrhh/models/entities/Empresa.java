@@ -1,8 +1,19 @@
 package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -23,12 +34,25 @@ public class Empresa implements Serializable {
 	@NotBlank(message = "El campo teléfono no puede estar vacío")
 	private String telefono;
 
-	@NotBlank(message = "El campo dirección no puede estar vacío")
+	
 	private String direccion;
 
 	@JoinColumn(name = "id_localidad", referencedColumnName = "id_localidad")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Localidad localidad;
+
+	@OneToMany(mappedBy = "empresa", fetch=FetchType.LAZY)
+	private List<Busqueda> busquedas;
+
+	
+
+	public List<Busqueda> getBusquedas() {
+		return busquedas;
+	}
+
+	public void setBusquedas(List<Busqueda> busquedas) {
+		this.busquedas = busquedas;
+	}
 
 	public Integer getIdEmpresa() {
 		return idEmpresa;

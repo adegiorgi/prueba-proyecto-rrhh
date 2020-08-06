@@ -1,6 +1,8 @@
 package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -16,7 +18,7 @@ public class Prioridad implements Serializable {
 
 	@NotBlank(message = "El campo nombre no puede estar vacío")
 	private String nombre;
-
+	
 	public Integer getIdPrioridad() {
 		return idPrioridad;
 	}
