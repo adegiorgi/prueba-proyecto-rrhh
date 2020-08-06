@@ -16,8 +16,8 @@ import javax.validation.constraints.NotBlank;
 public class Usuario implements Serializable {
 
 	@Id
-	@NotBlank(message = "El campo Email no puede estar vacío")
-	@Email(message = "Ingrese un Email válido")
+	@NotBlank(message = "El campo e-mail no puede estar vacío")
+	@Email(message = "Ingrese un e-mail válido")
 	private String email;
 
 	@NotBlank(message = "El campo nombre no puede estar vacío")
@@ -26,7 +26,7 @@ public class Usuario implements Serializable {
 	@NotBlank(message = "El campo apellido no puede estar vacío")
 	private String apellido;
 
-	@NotBlank(message = "El campo apellido no puede estar vacío")
+	@NotBlank(message = "El campo imagen no puede estar vacío")
 	@Column(name = "imagen_url")
 	private String imagenUrl;
 

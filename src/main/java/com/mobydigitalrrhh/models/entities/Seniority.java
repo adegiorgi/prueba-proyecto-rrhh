@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "Seniority")
+@Table(name = "seniority")
 public class Seniority implements Serializable {
 
 	@Id

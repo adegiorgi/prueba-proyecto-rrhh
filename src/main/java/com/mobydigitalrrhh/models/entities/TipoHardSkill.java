@@ -18,7 +18,6 @@ public class TipoHardSkill implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_tipo_hardskill")
-	@NotBlank
 	private Integer idTipoHardSkill;
 
 	@NotBlank(message = "El campo descripción no puede estar vacío")

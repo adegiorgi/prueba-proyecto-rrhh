@@ -13,16 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import javax.validation.constraints.NotBlank;
-
 @Entity
-@Table(name = "PuestoXEquipo")
+@Table(name = "puestoxequipo")
 public class PuestoPorEquipo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_puesto_x_equipo")
-	@NotBlank
 	private Integer idPuestoPorEquipo;
 
 	@JoinColumn(name = "id_puesto", referencedColumnName = "id_puesto")

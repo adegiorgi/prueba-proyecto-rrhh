@@ -2,7 +2,12 @@ package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -15,7 +20,7 @@ public class Institucion implements Serializable {
 	private Integer idInstitucion;
 
 	@Column(name = "nombre_institucion")
-	@NotBlank(message = "El campo nombre de no puede estar vacío")
+	@NotBlank(message = "El campo nombre no puede estar vacío")
 	private String nombre;
 
 	public Integer getIdInstitucion() {

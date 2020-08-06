@@ -24,7 +24,7 @@ public class Localidad implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idLocalidad;
 
-	@NotBlank(message = "El campo nombre de localidad no puede estar vacío")
+	@NotBlank(message = "El campo nombre no puede estar vacío")
 	private String nombre;
 
 	@JoinColumn(name = "id_provincia", referencedColumnName = "id_provincia")
