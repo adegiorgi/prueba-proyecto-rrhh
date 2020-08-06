@@ -2,7 +2,13 @@ package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -14,7 +20,7 @@ public class TipoSoftSkill implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idTipoSoftSkill;
 	
-	@NotBlank(message = "El campo de tipo de skill no puede estar vacío")
+	@NotBlank(message = "El campo tipo de skill no puede estar vacío")
 	private String tipoSkill;
 
 	public Integer getIdTipoSoftSkill() {

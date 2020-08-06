@@ -1,13 +1,9 @@
 package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -21,8 +17,30 @@ public class Puesto implements Serializable {
 	@NotBlank
 	private Integer idPuesto;
 
-	@NotBlank(message = "el nombre debe tener al menos un caracter")
+	@NotBlank(message = "El campo nombre no puede estar vacío")
 	private String nombre;
+	
+	@OneToMany(mappedBy = "puesto")
+	private List<PuestoPorCandidato> puestoPorCandidatos;
+
+	@OneToMany(mappedBy = "puesto")
+	private List<PuestoPorEquipo> puestoPorEquipos;
+
+	public List<PuestoPorCandidato> getPuestoPorCandidatos() {
+		return puestoPorCandidatos;
+	}
+
+	public void setPuestoPorCandidatos(List<PuestoPorCandidato> puestoPorCandidatos) {
+		this.puestoPorCandidatos = puestoPorCandidatos;
+	}
+
+	public List<PuestoPorEquipo> getPuestoPorEquipos() {
+		return puestoPorEquipos;
+	}
+
+	public void setPuestoPorEquipos(List<PuestoPorEquipo> puestoPorEquipos) {
+		this.puestoPorEquipos = puestoPorEquipos;
+	}
 
 	public Integer getIdPuesto() {
 		return idPuesto;

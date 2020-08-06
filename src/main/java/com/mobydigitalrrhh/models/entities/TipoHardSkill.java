@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -20,7 +21,7 @@ public class TipoHardSkill implements Serializable {
 	@NotBlank
 	private Integer idTipoHardSkill;
 
-	@NotBlank(message = "la descripcion debe tener almenos un caracter")
+	@NotBlank(message = "El campo descripción no puede estar vacío")
 	private String descripcion;
 
 	public Integer getIdTipoHardSkill() {

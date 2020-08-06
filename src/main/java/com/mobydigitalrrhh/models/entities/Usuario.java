@@ -18,27 +18,23 @@ public class Usuario implements Serializable {
 	@Id
 	@NotBlank(message = "El campo Email no puede estar vacío")
 	@Email(message = "Ingrese un Email válido")
-	String email;
+	private String email;
 
 	@NotBlank(message = "El campo nombre no puede estar vacío")
-	String nombre;
+	private String nombre;
 
 	@NotBlank(message = "El campo apellido no puede estar vacío")
-	String apellido;
+	private String apellido;
 
 	@NotBlank(message = "El campo apellido no puede estar vacío")
 	@Column(name = "imagen_url")
-	String imagenUrl;
+	private String imagenUrl;
 
 	@NotBlank(message = "El campo token no puede estar vacío")
-	String token;
+	private String token;
 
 	@OneToMany(mappedBy = "usuario")
 	private List<UsuarioPorRol> usuarioPorRoles;
-
-	public String getEmail() {
-		return email;
-	}
 
 	public List<UsuarioPorRol> getUsuarioPorRoles() {
 		return usuarioPorRoles;
@@ -46,6 +42,10 @@ public class Usuario implements Serializable {
 
 	public void setUsuarioPorRoles(List<UsuarioPorRol> usuarioPorRoles) {
 		this.usuarioPorRoles = usuarioPorRoles;
+	}
+
+	public String getEmail() {
+		return email;
 	}
 
 	public void setEmail(String email) {

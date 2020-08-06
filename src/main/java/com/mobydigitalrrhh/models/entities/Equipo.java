@@ -1,6 +1,7 @@
-package com.mobydigitalrrhh.models.entities;
+ package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -16,7 +17,10 @@ public class Equipo implements Serializable {
 
 	@NotBlank(message = "El campo nombre no puede estar vacío")
 	private String nombre;
-
+	
+	@OneToMany(mappedBy = "equipo")
+	private List<PuestoPorEquipo> puestoPorEquipos;
+	
 	public Integer getIdEquipo() {
 		return idEquipo;
 	}
