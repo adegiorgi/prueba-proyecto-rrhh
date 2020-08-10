@@ -30,7 +30,7 @@ public class Candidato implements Serializable {
 
 	private Integer dni;
 
-	@NotEmpty(message = "El campo nombreyApellido no puede quedar vacío")
+	@NotEmpty(message = "El campo nombreCompleto no puede quedar vacío")
 	@Column(name = "nombre_completo")
 	private String nombreCompleto;
 
@@ -52,7 +52,7 @@ public class Candidato implements Serializable {
 	private String domicilio;
 
 	@Column(name = "pretension_economica", scale = 2)
-	private float pretensionEconomica;
+	private Float pretensionEconomica;
 
 	@Column(name = "disponibilidad_viaje")
 	private boolean disponibilidadViaje;
@@ -76,29 +76,69 @@ public class Candidato implements Serializable {
 	private Integer aniosExperiencia;
 
 	@OneToMany(mappedBy = "candidato", fetch = FetchType.LAZY)
-	private List <CandidatoPorHardSkill> candidatosPorHardSkill;
-	
+	private List<CandidatoPorHardSkill> candidatoPorHardSkills;
+
+	@OneToMany(mappedBy = "candidato", fetch = FetchType.LAZY)
+	private List<CandidatoPorSoftSkill> candidatoPorSoftSkills;
 	
 	@OneToMany(mappedBy = "candidato", fetch = FetchType.LAZY)
-	private List <CandidatoPorSoftSkill> candidatosPorSoftSkill;
+	private List<Educacion> educaciones;
 	
+	@OneToMany(mappedBy = "candidato", fetch = FetchType.LAZY)
+	private List<Experiencia> experiencias;
+
+	@OneToMany(mappedBy = "candidato", fetch = FetchType.LAZY)
+	private List<IdiomaPorCandidato> idiomaPorCandidatos;
 	
+	@OneToMany(mappedBy = "candidato", fetch = FetchType.LAZY)
+	private List<PuestoPorCandidato> puestoPorCandidatos;
 	
-	
-	public List<CandidatoPorSoftSkill> getCandidatosPorSoftSkill() {
-		return candidatosPorSoftSkill;
+	public List<PuestoPorCandidato> getPuestoPorCandidatos() {
+		return puestoPorCandidatos;
 	}
 
-	public void setCandidatosPorSoftSkill(List<CandidatoPorSoftSkill> candidatosPorSoftSkill) {
-		this.candidatosPorSoftSkill = candidatosPorSoftSkill;
+	public void setPuestoPorCandidatos(List<PuestoPorCandidato> puestoPorCandidatos) {
+		this.puestoPorCandidatos = puestoPorCandidatos;
 	}
 
-	public List<CandidatoPorHardSkill> getCandidatosPorHardSkill() {
-		return candidatosPorHardSkill;
+	public List<IdiomaPorCandidato> getIdiomaPorCandidatos() {
+		return idiomaPorCandidatos;
 	}
 
-	public void setCandidatosPorHardSkill(List<CandidatoPorHardSkill> candidatosPorHardSkill) {
-		this.candidatosPorHardSkill = candidatosPorHardSkill;
+	public void setIdiomaPorCandidatos(List<IdiomaPorCandidato> idiomaPorCandidatos) {
+		this.idiomaPorCandidatos = idiomaPorCandidatos;
+	}
+	
+	public List<Experiencia> getExperiencias() {
+		return experiencias;
+	}
+
+	public void setExperiencias(List<Experiencia> experiencias) {
+		this.experiencias = experiencias;
+	}
+
+	public List<CandidatoPorHardSkill> getCandidatoPorHardSkills() {
+		return candidatoPorHardSkills;
+	}
+
+	public void setCandidatoPorHardSkills(List<CandidatoPorHardSkill> candidatoPorHardSkills) {
+		this.candidatoPorHardSkills = candidatoPorHardSkills;
+	}
+
+	public List<CandidatoPorSoftSkill> getCandidatoPorSoftSkills() {
+		return candidatoPorSoftSkills;
+	}
+
+	public void setCandidatoPorSoftSkills(List<CandidatoPorSoftSkill> candidatoPorSoftSkills) {
+		this.candidatoPorSoftSkills = candidatoPorSoftSkills;
+	}
+
+	public List<Educacion> getEducaciones() {
+		return educaciones;
+	}
+
+	public void setEducaciones(List<Educacion> educaciones) {
+		this.educaciones = educaciones;
 	}
 
 	public Integer getIdCandidato() {
@@ -165,11 +205,11 @@ public class Candidato implements Serializable {
 		this.domicilio = domicilio;
 	}
 
-	public float getPretensionEconomica() {
+	public Float getPretensionEconomica() {
 		return pretensionEconomica;
 	}
 
-	public void setPretensionEconomica(float pretensionEconomica) {
+	public void setPretensionEconomica(Float pretensionEconomica) {
 		this.pretensionEconomica = pretensionEconomica;
 	}
 

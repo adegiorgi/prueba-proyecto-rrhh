@@ -25,10 +25,32 @@ public class Puesto implements Serializable {
 	private String nombre;
 	
 	@OneToMany(mappedBy = "puesto")
+	private List<Entrevistador> entrevistadores;
+	
+	@OneToMany(mappedBy = "puesto")
 	private List<PuestoPorCandidato> puestoPorCandidatos;
 
 	@OneToMany(mappedBy = "puesto")
 	private List<PuestoPorEquipo> puestoPorEquipos;
+	
+	@OneToMany(mappedBy = "puesto")
+	private List<ExperienciaPorPuesto> experienciaPorPuestos;
+	
+	public List<ExperienciaPorPuesto> getExperienciaPorPuestos() {
+		return experienciaPorPuestos;
+	}
+
+	public void setExperienciaPorPuestos(List<ExperienciaPorPuesto> experienciaPorPuestos) {
+		this.experienciaPorPuestos = experienciaPorPuestos;
+	}
+
+	public List<Entrevistador> getEntrevistadores() {
+		return entrevistadores;
+	}
+
+	public void setEntrevistadores(List<Entrevistador> entrevistadores) {
+		this.entrevistadores = entrevistadores;
+	}
 
 	public List<PuestoPorCandidato> getPuestoPorCandidatos() {
 		return puestoPorCandidatos;

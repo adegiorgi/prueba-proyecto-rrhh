@@ -1,12 +1,14 @@
 package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -22,6 +24,17 @@ public class Institucion implements Serializable {
 	@Column(name = "nombre_institucion")
 	@NotBlank(message = "El campo nombre no puede estar vacío")
 	private String nombre;
+
+	@OneToMany(mappedBy = "institucion")
+	private List<Educacion> educaciones;
+
+	public List<Educacion> getEducaciones() {
+		return educaciones;
+	}
+
+	public void setEducaciones(List<Educacion> educaciones) {
+		this.educaciones = educaciones;
+	}
 
 	public Integer getIdInstitucion() {
 		return idInstitucion;

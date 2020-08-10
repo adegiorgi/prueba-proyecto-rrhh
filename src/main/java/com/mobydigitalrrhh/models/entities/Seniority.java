@@ -30,6 +30,11 @@ public class Seniority implements Serializable {
 	private List<HardSkill> hardSkills;
 
 	
+
+	@OneToMany(mappedBy = "seniority")
+	private List<HardSkill> hardSkills;
+	
+
 	public List<HardSkill> getHardSkills() {
 		return hardSkills;
 	}

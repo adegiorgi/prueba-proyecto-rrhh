@@ -28,6 +28,17 @@ public class Equipo implements Serializable {
 	@OneToMany(mappedBy = "equipo", fetch = FetchType.LAZY)
 	private List<Busqueda> busquedas;
 
+	@OneToMany(mappedBy = "equipo")
+	private List<PuestoPorEquipo> puestoPorEquipos;
+
+	public List<PuestoPorEquipo> getPuestoPorEquipos() {
+		return puestoPorEquipos;
+	}
+
+	public void setPuestoPorEquipos(List<PuestoPorEquipo> puestoPorEquipos) {
+		this.puestoPorEquipos = puestoPorEquipos;
+	}
+
 	public List<Busqueda> getBusquedas() {
 		return busquedas;
 	}
@@ -35,9 +46,6 @@ public class Equipo implements Serializable {
 	public void setBusquedas(List<Busqueda> busquedas) {
 		this.busquedas = busquedas;
 	}
-
-	@OneToMany(mappedBy = "equipo")
-	private List<PuestoPorEquipo> puestoPorEquipos;
 
 	public Integer getIdEquipo() {
 		return idEquipo;

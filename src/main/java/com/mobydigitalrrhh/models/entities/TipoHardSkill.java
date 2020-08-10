@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "tiposhardskill")
+@Table(name = "tipohardskills")
 public class TipoHardSkill implements Serializable {
 
 	@Id
@@ -26,8 +26,21 @@ public class TipoHardSkill implements Serializable {
 	@NotBlank(message = "El campo descripción no puede estar vacío")
 	private String descripcion;
 	
+
 	@OneToMany(mappedBy = "tipoHardSkill", fetch = FetchType.LAZY)
 	private List<HardSkill> hardSkills;
+
+	@OneToMany(mappedBy = "tipoHardSkill")
+	private List<HardSkill> hardSkills;
+	
+	public List<HardSkill> getHardSkills() {
+		return hardSkills;
+	}
+
+	public void setHardSkills(List<HardSkill> hardSkills) {
+		this.hardSkills = hardSkills;
+	}
+
 
 	public Integer getIdTipoHardSkill() {
 		return idTipoHardSkill;

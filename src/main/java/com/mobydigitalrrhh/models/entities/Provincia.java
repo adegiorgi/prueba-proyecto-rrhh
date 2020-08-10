@@ -1,7 +1,6 @@
 package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +28,9 @@ public class Provincia implements Serializable {
 	@OneToMany(mappedBy = "provincia", fetch = FetchType.LAZY)
 	private List<Busqueda> busquedas;
 
+	@OneToMany(mappedBy = "provincia")
+	private List<Localidad> localidades;
+	
 	public List<Busqueda> getBusquedas() {
 		return busquedas;
 	}
@@ -36,9 +38,6 @@ public class Provincia implements Serializable {
 	public void setBusquedas(List<Busqueda> busquedas) {
 		this.busquedas = busquedas;
 	}
-
-	@OneToMany(mappedBy = "provincia")
-	private List<Localidad> localidades;
 
 	public List<Localidad> getLocalidades() {
 		return localidades;
