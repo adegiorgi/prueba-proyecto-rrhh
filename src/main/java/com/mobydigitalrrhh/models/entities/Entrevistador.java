@@ -32,19 +32,17 @@ public class Entrevistador implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Usuario usaurio;
 
-	@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Usuario usuario;
 	
 	@OneToMany(mappedBy = "entrevistador")
 	private List<EntrevistadorPorEntrevista> entrevistadorPorEntrevistas;
 
-	public Usuario getUsuario() {
-		return usuario;
+
+	public Usuario getUsaurio() {
+		return usaurio;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUsaurio(Usuario usaurio) {
+		this.usaurio = usaurio;
 	}
 
 	public List<EntrevistadorPorEntrevista> getEntrevistadorPorEntrevistas() {

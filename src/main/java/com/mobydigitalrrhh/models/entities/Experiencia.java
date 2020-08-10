@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,12 +27,12 @@ public class Experiencia implements Serializable {
 	private Integer idExperiencia;
 
 	@JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Empresa empresa;
 
 	@JoinColumn(name = "id_candidato", referencedColumnName = "id_candidato")
-	@ManyToOne
-	private Candidato idCandidato;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Candidato candidato;
 
 	@NotBlank(message = "El campo fecha inicio no puede estar vacío")
 	@Column(name = "fecha_inicio")
@@ -72,12 +74,13 @@ public class Experiencia implements Serializable {
 		this.empresa = empresa;
 	}
 
-	public Candidato getIdCandidato() {
-		return idCandidato;
+
+	public Candidato getCandidato() {
+		return candidato;
 	}
 
-	public void setIdCandidato(Candidato idCandidato) {
-		this.idCandidato = idCandidato;
+	public void setCandidato(Candidato candidato) {
+		this.candidato = candidato;
 	}
 
 	public Date getFechaInicio() {

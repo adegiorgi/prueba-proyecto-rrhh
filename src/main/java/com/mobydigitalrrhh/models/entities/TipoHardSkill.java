@@ -30,8 +30,6 @@ public class TipoHardSkill implements Serializable {
 	@OneToMany(mappedBy = "tipoHardSkill", fetch = FetchType.LAZY)
 	private List<HardSkill> hardSkills;
 
-	@OneToMany(mappedBy = "tipoHardSkill")
-	private List<HardSkill> hardSkills;
 	
 	public List<HardSkill> getHardSkills() {
 		return hardSkills;
