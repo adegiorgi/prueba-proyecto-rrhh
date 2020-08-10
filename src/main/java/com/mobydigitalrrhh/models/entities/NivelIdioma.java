@@ -22,7 +22,7 @@ public class NivelIdioma implements Serializable {
 
 	private String descripcion;
 
-	@OneToMany(mappedBy = "idioma")
+	@OneToMany(mappedBy = "nivelidioma")
 	private List<Idioma> idiomas;
 
 	public List<Idioma> getIdiomas() {

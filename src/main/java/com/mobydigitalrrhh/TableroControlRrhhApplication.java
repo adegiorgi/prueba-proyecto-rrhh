@@ -9,5 +9,4 @@ public class TableroControlRrhhApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TableroControlRrhhApplication.class, args);
 	}
-	
 }

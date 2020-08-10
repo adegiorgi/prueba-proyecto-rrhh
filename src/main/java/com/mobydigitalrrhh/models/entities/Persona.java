@@ -11,8 +11,8 @@ public class Persona implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@OneToMany // auto-incrementa la id_persona en la DB.
 	private Integer id_persona;
+
 	@Column(name = "nombre_persona")
 	private String nombre;
 	private String apellido;

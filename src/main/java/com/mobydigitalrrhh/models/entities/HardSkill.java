@@ -3,7 +3,14 @@ package com.mobydigitalrrhh.models.entities;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -11,7 +18,7 @@ import javax.validation.constraints.NotBlank;
 public class HardSkill implements Serializable {
 
 	@Id
-	@Column(name = "id_hardskill")
+	@Column(name = "id_hard_skill")
 	private Integer idHardSkill;
 
 	@NotBlank (message = "El campo nombre no puede estar vacío")
@@ -25,7 +32,7 @@ public class HardSkill implements Serializable {
 	@ManyToOne
 	private TipoHardSkill tipoHardSkill;
 
-	@OneToMany (mappedBy = "hardSkill" , fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "hardSkill" , fetch = FetchType.LAZY)
 	private List <CandidatoPorHardSkill> candidatosPorHardSkill;
 	
 	

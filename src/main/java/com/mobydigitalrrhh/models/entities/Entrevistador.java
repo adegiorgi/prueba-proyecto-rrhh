@@ -24,7 +24,7 @@ public class Entrevistador implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Puesto puesto;
 
-	@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+	@JoinColumn(name = "email", referencedColumnName = "email")
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Usuario usaurio;
 
