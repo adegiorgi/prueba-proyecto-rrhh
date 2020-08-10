@@ -2,7 +2,6 @@ package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +18,7 @@ import javax.validation.constraints.NotBlank;
 public class HardSkill implements Serializable {
 
 	@Id
-	@Column(name = "id_hardskill")
+	@Column(name = "id_hard_skill")
 	private Integer idHardSkill;
 
 	@NotBlank (message = "El campo nombre no puede estar vacío")

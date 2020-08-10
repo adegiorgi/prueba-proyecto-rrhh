@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,10 +25,16 @@ public class Seniority implements Serializable {
 
 	@NotBlank(message = "El campo descripción no puede estar vacío")
 	private String descripcion;
+
+	@OneToMany(mappedBy = "seniority", fetch = FetchType.LAZY)
+	private List<HardSkill> hardSkills;
+
 	
+
 	@OneToMany(mappedBy = "seniority")
 	private List<HardSkill> hardSkills;
 	
+
 	public List<HardSkill> getHardSkills() {
 		return hardSkills;
 	}

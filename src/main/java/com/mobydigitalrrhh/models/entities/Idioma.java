@@ -20,10 +20,23 @@ public class Idioma implements Serializable {
 	@Column(name = "id_idioma")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idIdioma;
-	
+
 	@NotBlank(message = "El campo idioma no puede estar vacío")
 	private String nombre;
+
+	@JoinColumn(name = "id_nivel_idioma", referencedColumnName = "id_nivel_idioma")
+	@ManyToOne(cascade = CascadeType.ALL)
+	private NivelIdioma nivelidioma;
+
 	
+
+	public NivelIdioma getNivelidioma() {
+		return nivelidioma;
+	}
+
+	public void setNivelidioma(NivelIdioma nivelidioma) {
+		this.nivelidioma = nivelidioma;
+
 	@OneToMany(mappedBy = "idioma")
 	private List<IdiomaPorCandidato> idiomaPorCandidatos;
 	
@@ -33,6 +46,7 @@ public class Idioma implements Serializable {
 
 	public void setIdiomaPorCandidatos(List<IdiomaPorCandidato> idiomaPorCandidatos) {
 		this.idiomaPorCandidatos = idiomaPorCandidatos;
+
 	}
 
 	public Integer getIdIdioma() {

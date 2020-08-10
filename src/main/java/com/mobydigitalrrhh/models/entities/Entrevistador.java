@@ -27,6 +27,11 @@ public class Entrevistador implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Puesto puesto;
 
+
+	@JoinColumn(name = "email", referencedColumnName = "email")
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Usuario usaurio;
+
 	@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Usuario usuario;
@@ -49,6 +54,7 @@ public class Entrevistador implements Serializable {
 	public void setEntrevistadorPorEntrevistas(List<EntrevistadorPorEntrevista> entrevistadorPorEntrevistas) {
 		this.entrevistadorPorEntrevistas = entrevistadorPorEntrevistas;
 	}
+
 
 	public Integer getIdEntrevistador() {
 		return idEntrevistador;
