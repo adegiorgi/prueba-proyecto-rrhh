@@ -6,15 +6,13 @@ server:
 spring:
   # JPA
   jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
   # Base de Datos
   datasource:
-    url: jdbc:mysql://localhost/pruebaBaseMoby2?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrival=true
-    username: root
-    password: ricardo
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://us-cdbr-east-05.cleardb.net/heroku_55eeca3c59a95bf?reconnect=true
+    username: b0a8f5fed88e38
+    password: a755529a
   # Seguridad
   security:
     oauth2:
@@ -43,3 +41,5 @@ oauth:
   userInfoUrl: https://www.googleapis.com/oauth2/v3/userinfo
   appTokenURI: /oauth/app_token
   secretKey: "mySecretKey"
+  
+ 

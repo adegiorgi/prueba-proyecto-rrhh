@@ -29,11 +29,6 @@ public class Seniority implements Serializable {
 	@OneToMany(mappedBy = "seniority", fetch = FetchType.LAZY)
 	private List<HardSkill> hardSkills;
 
-	
-
-	@OneToMany(mappedBy = "seniority")
-	private List<HardSkill> hardSkills;
-	
 
 	public List<HardSkill> getHardSkills() {
 		return hardSkills;
