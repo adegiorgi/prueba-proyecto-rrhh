@@ -1,14 +1,19 @@
+# Configuración del puerto.
 server:
   port: 8081
 
+# Configuraciones de Spring.
 spring:
+  # JPA
   jpa:
     hibernate:
       ddl-auto: update
+  # Base de Datos
   datasource:
     url: jdbc:mysql://us-cdbr-east-05.cleardb.net/heroku_55eeca3c59a95bf?reconnect=true
     username: b0a8f5fed88e38
     password: a755529a
+  # Seguridad
   security:
     oauth2:
       client:
@@ -16,7 +21,19 @@ spring:
           google:
             client-id: 476890059837-1bnb0vheu7ulrfq914ma0tnvi6plp4ai.apps.googleusercontent.com
             client-secret: 0Mqb34KH8juRWh-Tocm2pykJ
-    
+  # Consola H2 de Spring.
+  #h2:
+    #console:
+      #enabled: true
+      #path: /h2-console
+  # Fuente de datos para Consola H2 de Spring.
+  #datasource:
+    #url: jdbc:h2:mem:testdb
+    #username: rrhh
+    #password: 123
+    #driverClassName: org.h2.Driver
+
+# Configuración de OAuth
 oauth:
   clientId: 476890059837-1bnb0vheu7ulrfq914ma0tnvi6plp4ai.apps.googleusercontent.com # get a client-id from https://console.developers.google.com/
   clientSecret: 0Mqb34KH8juRWh-Tocm2pykJ # get a client-secret from https://console.developers.google.com/
@@ -25,3 +42,4 @@ oauth:
   appTokenURI: /oauth/app_token
   secretKey: "mySecretKey"
   
+ 
