@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.mobydigitalrrhh.configuration.OAuthProperties;
 import com.mobydigitalrrhh.google.GoogleChecker;
+import com.mobydigitalrrhh.models.entities.Usuario;
 import com.mobydigitalrrhh.repository.UserRepository;
 
 import io.jsonwebtoken.Claims;
@@ -38,6 +39,8 @@ public class TokenService {
 	@Autowired 
 	private UserRepository userRepository;
 	
+	@Autowired
+	private UsuarioServiceImp usuarioService;
 
 	public boolean isAuthenticatedToken() {
 		//TODO implement method
@@ -50,6 +53,7 @@ public class TokenService {
 	
 	public UsernamePasswordAuthenticationToken verifyTokenFromGoogle(String token) {
 		String CLIENT_ID = oAuthProperties.getClientId();
+		Usuario usuario = new Usuario();
 		/*
 		 * Obtengo el "authorization token" y lo valido con GoogleChecker googleChecker como sigue:
 		 * Si, el token está validado, obtenemos información de perfil y preguntamos:
@@ -67,6 +71,19 @@ public class TokenService {
         GoogleIdToken.Payload jwtObject = googleChecker.check(token); 
         if(jwtObject != null) { //jwtObject.get("given_name")    {"at_hash":"Z6a2kNmRPCSZlSWMI2brag","aud":"252882737828-4nijfj919fdsokaalhgcada9djg0ttth.apps.googleusercontent.com","azp":"252882737828-4nijfj919fdsokaalhgcada9djg0ttth.apps.googleusercontent.com","email":"igutierrez@mobydigital.com","email_verified":true,"exp":1594589992,"hd":"mobydigital.com","iat":1594586392,"iss":"https://accounts.google.com","nonce":"0YMEgRFNfrN92O9fpNdQdHkkEmwezz0Pctg_ugrY_Rw","sub":"118075249841973988243","name":"Iván Gutierrez","picture":"https://lh3.googleusercontent.com/a-/AOh14Gi2WUj784hiw9K1yXBtzKBU_rPDYZkrLymdyXUA=s96-c","given_name":"Iván","family_name":"Gutierrez ","locale":"es"}
         	//verificar si jwtObject.getEmail() existe en la bd.. sino existe hay que crearlo con su rol por defecto retornar siempre el usuario
+        	
+        	usuario = usuarioService.findByEmail(jwtObject.getEmail());
+        	if(usuario == null) {
+        		usuario = new Usuario();
+        		usuario.setEmail(jwtObject.getEmail());
+        		usuario.setNombre((String) jwtObject.get("given_name"));
+        		usuario.setApellido((String) jwtObject.get("family_name"));
+        		usuario.setImagenUrl((String) jwtObject.get("picture"));
+        		usuario.setToken(token);
+        		
+        		usuarioService.createUsuario(usuario);
+        	}
+        	
         	UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
         			jwtObject.getEmail(), null, new ArrayList<>());
         	//este es el objeto con la info del usuario 
@@ -75,7 +92,6 @@ public class TokenService {
         return null;
 	}
 
-	
 	public UsernamePasswordAuthenticationToken verifyAppToken(String token) {
 		//{jti=softtekJWT, sub=igutierrez@mobydigital.com, authorities=[ROLE_USER], iat=1594690351, exp=1594690951}
 		Claims claims = Jwts.parser()
@@ -106,7 +122,7 @@ public class TokenService {
 								.map(GrantedAuthority::getAuthority)
 								.collect(Collectors.toList()))
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 600000)) // 600000 milisegundos son 10 minutos.
+				.setExpiration(new Date(System.currentTimeMillis() + 6000000)) // 6000000 milisegundos son 100 minutos.
 				.signWith(SignatureAlgorithm.HS512,
 						oAuthProperties.getSecretKey().getBytes()).compact();
 		/*
@@ -124,7 +140,7 @@ public class TokenService {
     		return null;
     	} 
     	
-    	return authorizationHeader.substring(7);
+    	return authorizationHeader.substring(7); // Retornamos el tokenId
 	}
 	
 	

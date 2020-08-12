@@ -42,9 +42,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     	/*
     	 * Obtengo el token.
     	 */
-    	final String token = tokenService.getTokenFromRequest(request);
+    	final String token = tokenService.getTokenFromRequest(request); // Obtiene el token de la request.
     	/*
-    	 * Pregunto si la request viene de "/oauth/app_token" y NO es null, hago lo que sigue.
+    	 * Pregunto si la request es un POST y si NO es null, hago lo que sigue.
     	 */
     	if( this.isPostMethod(request) &&  token != null ) {    		
     		try {

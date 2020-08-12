@@ -40,6 +40,7 @@ public class Usuario implements Serializable {
 	private List<EntrevistadorPorEntrevista> entrevistadoresPorEntrevista;
 
 	
+	
 	public List<EntrevistadorPorEntrevista> getEntrevistadoresPorEntrevista() {
 		return entrevistadoresPorEntrevista;
 	}
