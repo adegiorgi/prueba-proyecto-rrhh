@@ -32,20 +32,14 @@ public class Usuario implements Serializable {
 
 	@NotBlank(message = "El campo token no puede estar vacío")
 	private String token;
-	
-	
 
 	@OneToMany(mappedBy = "usuario")
 	private List<UsuarioPorRol> usuarioPorRoles;
-     
+
 	@OneToMany(mappedBy = "usuario")
 	private List<EntrevistadorPorEntrevista> entrevistadoresPorEntrevista;
-     
-	
-	
-	
 
-
+	
 	public List<EntrevistadorPorEntrevista> getEntrevistadoresPorEntrevista() {
 		return entrevistadoresPorEntrevista;
 	}

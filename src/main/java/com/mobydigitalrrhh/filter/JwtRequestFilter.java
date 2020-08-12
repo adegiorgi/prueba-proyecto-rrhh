@@ -55,6 +55,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     			Authentication user = this.loadAuthenticationContext(token, request);            	
     			/*
     			 * Después de pasar por el método loadAuthenticationContext(), creamos el token para responder en el método que sigue.
+    			 * en la linea 60 habria que devolver un objeto usuario JSON con toda su info por BODY.
     			 */
             	response.addHeader(HttpHeaders.AUTHORIZATION, tokenService.generateAppToken(user.getPrincipal().toString()));    			
     		}catch (Exception e) {
