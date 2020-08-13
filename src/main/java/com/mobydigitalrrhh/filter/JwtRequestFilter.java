@@ -10,12 +10,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.google.gson.Gson;
+import com.mobydigitalrrhh.models.entities.Usuario;
 import com.mobydigitalrrhh.models.services.TokenService;
+import com.mobydigitalrrhh.models.services.UsuarioServiceImp;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
@@ -25,6 +31,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	 */
 	@Autowired
 	private TokenService tokenService;
+	
+	private Gson gson = new Gson();
+	
+	@Autowired
+	private UsuarioServiceImp usuarioService;
+	
   
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,FilterChain chain)
@@ -33,6 +45,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     	 * Obtengo el token.
     	 */
     	final String token = tokenService.getTokenFromRequest(request); // Obtiene el token de la request.
+    	
+    	Usuario usuario = new Usuario();
     	/*
     	 * Pregunto si la request es un POST y si NO es null, hago lo que sigue.
     	 */
@@ -47,6 +61,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     			 * Después de pasar por el método loadAuthenticationContext(), creamos el token para responder en el método que sigue.
     			 * en la linea 60 habria que devolver un objeto usuario JSON con toda su info por BODY.
     			 */
+    			//System.out.println(user.getPrincipal().toString());
+    			usuario = buscarUsuarioBD(user.getPrincipal().toString());
+    			
+    			
+    			String usuarioJson = new Gson().toJson(usuario);
+    			System.out.println(usuarioJson);
+
+    			response.getWriter().write(usuarioJson);
     			
                response.addHeader(HttpHeaders.AUTHORIZATION, tokenService.generateAppToken(user.getPrincipal().toString()));
     			//parsear el objeto user a JSON y mandarlo por write
@@ -82,7 +104,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			 * Si el user NO es null, entonces significa que está en nuestro sistema.
 			 */
     		user.setDetails(new WebAuthenticationDetailsSource().buildDetails(request)); //Optional
-    		/*
+    		/*BD
     		 * Creamos el contexto para que todo el sistema pueda estar seguro de que el user está logueado. 
     		 * 
     		 * [ANOTACIÓN] El user debería extender de la clase "Authentication" para enviarlo directamente.
@@ -96,4 +118,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     }
 		
 
+    private Usuario buscarUsuarioBD(String email) {
+
+    	System.out.println(usuarioService.findByEmail(email).toString());
+    	return usuarioService.findByEmail(email);
+    	
+    }
 }
