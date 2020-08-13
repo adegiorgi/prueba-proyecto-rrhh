@@ -7,25 +7,15 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.mobydigitalrrhh.configuration.OAuthProperties;
-import com.mobydigitalrrhh.google.GoogleChecker;
 import com.mobydigitalrrhh.models.services.TokenService;
-import com.mobydigitalrrhh.utils.JwtUtil;
-
-
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
@@ -37,7 +27,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	private TokenService tokenService;
   
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,FilterChain chain)
             throws ServletException, IOException {
     	/*
     	 * Obtengo el token.
@@ -57,7 +47,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     			 * Después de pasar por el método loadAuthenticationContext(), creamos el token para responder en el método que sigue.
     			 * en la linea 60 habria que devolver un objeto usuario JSON con toda su info por BODY.
     			 */
-            	response.addHeader(HttpHeaders.AUTHORIZATION, tokenService.generateAppToken(user.getPrincipal().toString()));    			
+    			
+               response.addHeader(HttpHeaders.AUTHORIZATION, tokenService.generateAppToken(user.getPrincipal().toString()));
+    			//parsear el objeto user a JSON y mandarlo por write
+    			
+    		
+    			
+    		
     		}catch (Exception e) {
     			response.sendError(HttpStatus.SC_FORBIDDEN);
 			}

@@ -30,123 +30,121 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class TokenService {
-	
+
 	private final String JWT_HEADER = "Bearer ";
-	
+
 	@Autowired
 	private OAuthProperties oAuthProperties;
-	
-	@Autowired 
+
+	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private UsuarioServiceImp usuarioService;
 
 	public boolean isAuthenticatedToken() {
-		//TODO implement method
+		// TODO implement method
 		return false;
 	}
-	
+
 	/*
 	 * En el método verifyTokenFromGoogle(), obtengo el "authorization token".
-	 */ 
-	
+	 */
+
 	public UsernamePasswordAuthenticationToken verifyTokenFromGoogle(String token) {
 		String CLIENT_ID = oAuthProperties.getClientId();
 		Usuario usuario = new Usuario();
 		/*
-		 * Obtengo el "authorization token" y lo valido con GoogleChecker googleChecker como sigue:
-		 * Si, el token está validado, obtenemos información de perfil y preguntamos:
-		 * 		- Si, el email está registrado en nuestro sistema:
-		 * 			. Obtenemos información (nombre, roles, email, etc.).
-		 * 			. Retornamos un User.
-		 * 		- Si no:
-		 * 			. Guardo el nuevo usuario en la DB con un rol por defecto (Un admin en la app se va a encargar de asignar roles).
-		 * 		Ahora sí, voy a generar el nuevo token con la información del usuario.
-		 * 			. Retornamos un nuevo User.
+		 * Obtengo el "authorization token" y lo valido con GoogleChecker googleChecker
+		 * como sigue: Si, el token está validado, obtenemos información de perfil y
+		 * preguntamos: - Si, el email está registrado en nuestro sistema: . Obtenemos
+		 * información (nombre, roles, email, etc.). . Retornamos un User. - Si no: .
+		 * Guardo el nuevo usuario en la DB con un rol por defecto (Un admin en la app
+		 * se va a encargar de asignar roles). Ahora sí, voy a generar el nuevo token
+		 * con la información del usuario. . Retornamos un nuevo User.
 		 */
 		System.out.println(token);
-        GoogleChecker googleChecker = new GoogleChecker(new String[]{CLIENT_ID}, CLIENT_ID);
-        
-        GoogleIdToken.Payload jwtObject = googleChecker.check(token); 
-        if(jwtObject != null) { //jwtObject.get("given_name")    {"at_hash":"Z6a2kNmRPCSZlSWMI2brag","aud":"252882737828-4nijfj919fdsokaalhgcada9djg0ttth.apps.googleusercontent.com","azp":"252882737828-4nijfj919fdsokaalhgcada9djg0ttth.apps.googleusercontent.com","email":"igutierrez@mobydigital.com","email_verified":true,"exp":1594589992,"hd":"mobydigital.com","iat":1594586392,"iss":"https://accounts.google.com","nonce":"0YMEgRFNfrN92O9fpNdQdHkkEmwezz0Pctg_ugrY_Rw","sub":"118075249841973988243","name":"Iván Gutierrez","picture":"https://lh3.googleusercontent.com/a-/AOh14Gi2WUj784hiw9K1yXBtzKBU_rPDYZkrLymdyXUA=s96-c","given_name":"Iván","family_name":"Gutierrez ","locale":"es"}
-        	//verificar si jwtObject.getEmail() existe en la bd.. sino existe hay que crearlo con su rol por defecto retornar siempre el usuario
-        	
-        	usuario = usuarioService.findByEmail(jwtObject.getEmail());
-        	if(usuario == null) {
-        		usuario = new Usuario();
-        		usuario.setEmail(jwtObject.getEmail());
-        		usuario.setNombre((String) jwtObject.get("given_name"));
-        		usuario.setApellido((String) jwtObject.get("family_name"));
-        		usuario.setImagenUrl((String) jwtObject.get("picture"));
-        		usuario.setToken(token);
-        		
-        		usuarioService.createUsuario(usuario);
-        	}
-        	
-        	UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-        			jwtObject.getEmail(), null, new ArrayList<>());
-        	//este es el objeto con la info del usuario 
-        	return usernamePasswordAuthenticationToken;
-        }
-        return null;
+		GoogleChecker googleChecker = new GoogleChecker(new String[] { CLIENT_ID }, CLIENT_ID);
+
+		GoogleIdToken.Payload jwtObject = googleChecker.check(token);
+		if (jwtObject != null) { // jwtObject.get("given_name")
+									// {"at_hash":"Z6a2kNmRPCSZlSWMI2brag","aud":"252882737828-4nijfj919fdsokaalhgcada9djg0ttth.apps.googleusercontent.com","azp":"252882737828-4nijfj919fdsokaalhgcada9djg0ttth.apps.googleusercontent.com","email":"igutierrez@mobydigital.com","email_verified":true,"exp":1594589992,"hd":"mobydigital.com","iat":1594586392,"iss":"https://accounts.google.com","nonce":"0YMEgRFNfrN92O9fpNdQdHkkEmwezz0Pctg_ugrY_Rw","sub":"118075249841973988243","name":"Iván
+									// Gutierrez","picture":"https://lh3.googleusercontent.com/a-/AOh14Gi2WUj784hiw9K1yXBtzKBU_rPDYZkrLymdyXUA=s96-c","given_name":"Iván","family_name":"Gutierrez
+									// ","locale":"es"}
+			// verificar si jwtObject.getEmail() existe en la bd.. sino existe hay que 
+			// crearlo con su rol por defecto retornar siempre el usuario
+			usuario = usuarioService.findByEmail(jwtObject.getEmail());
+			if (usuario == null) {
+				crearUsuario(usuario, jwtObject, token);
+			}
+
+			UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+					jwtObject.getEmail(), null, new ArrayList<>());
+			// este es el objeto con la info del usuario
+			return usernamePasswordAuthenticationToken;
+		}
+		return null;
 	}
 
 	public UsernamePasswordAuthenticationToken verifyAppToken(String token) {
-		//{jti=softtekJWT, sub=igutierrez@mobydigital.com, authorities=[ROLE_USER], iat=1594690351, exp=1594690951}
-		Claims claims = Jwts.parser()
-	            .setSigningKey(oAuthProperties.getSecretKey().getBytes())
-	            .parseClaimsJws(token).getBody();
-		//verificar en la BD si existe ese usuario con claims.getSubject(), si existe genero el objeto usuario para el contexto
+		// {jti=softtekJWT, sub=igutierrez@mobydigital.com, authorities=[ROLE_USER],
+		// iat=1594690351, exp=1594690951}
+		Claims claims = Jwts.parser().setSigningKey(oAuthProperties.getSecretKey().getBytes()).parseClaimsJws(token)
+				.getBody();
+		// verificar en la BD si existe ese usuario con claims.getSubject(), si existe
+		// genero el objeto usuario para el contexto
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 				claims.getSubject(), null, new ArrayList<>());
-	    return usernamePasswordAuthenticationToken;
+		return usernamePasswordAuthenticationToken;
 	}
-	
+
 	public String generateAppToken(String username) {
 		/*
-		 * En este método: 
-		 * 	1- Recibimos un usuario,
-		 * 	2- obtenemos la lista de roles, 
-		 * 	3- y las cargamos.
+		 * En este método: 1- Recibimos un usuario, 2- obtenemos la lista de roles, 3- y
+		 * las cargamos.
 		 */
-		List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-				.commaSeparatedStringToAuthorityList("ROLE_USER");
-		
-		String token = Jwts
-				.builder()
-				.setId("softtekJWT")
-				.setSubject(username)
+		List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
+
+		String token = Jwts.builder().setId("softtekJWT").setSubject(username)
 				.claim("authorities",
-						grantedAuthorities.stream()
-								.map(GrantedAuthority::getAuthority)
-								.collect(Collectors.toList()))
+						grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + 6000000)) // 6000000 milisegundos son 100 minutos.
-				.signWith(SignatureAlgorithm.HS512,
-						oAuthProperties.getSecretKey().getBytes()).compact();
+				.signWith(SignatureAlgorithm.HS512, oAuthProperties.getSecretKey().getBytes()).compact();
 		/*
-		 * Respondemos con el Bearer token.
-		 * Con esto, el front va a recibir un token y los pró´ximos POST o GET que nos envíen van a ir a una validación
-		 * que va a verificar el token que está navengando en la aplicación.
+		 * Respondemos con el Bearer token. Con esto, el front va a recibir un token y
+		 * los pró´ximos POST o GET que nos envíen van a ir a una validación que va a
+		 * verificar el token que está navengando en la aplicación.
 		 */
 		return "Bearer " + token;
 	}
-	
+
 	public String getTokenFromRequest(HttpServletRequest request) {
 		final String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        
-    	if( authorizationHeader == null || (authorizationHeader != null && !authorizationHeader.startsWith(JWT_HEADER)) ) {
-    		return null;
-    	} 
-    	
-    	return authorizationHeader.substring(7); // Retornamos el tokenId
+
+		if (authorizationHeader == null
+				|| (authorizationHeader != null && !authorizationHeader.startsWith(JWT_HEADER))) {
+			return null;
+		}
+
+		return authorizationHeader.substring(7); // Retornamos el tokenId
 	}
-	
-	
+
 	public boolean isAppTokenRequest(HttpServletRequest request) {
 		return request.getRequestURI().equals(oAuthProperties.getAppTokenURI());
 	}
-	
-	
+
+	public void crearUsuario(Usuario usuario, GoogleIdToken.Payload jwtObject, String token) {
+
+		usuario = new Usuario();
+		usuario.setEmail(jwtObject.getEmail());
+		usuario.setNombre((String) jwtObject.get("given_name"));
+		usuario.setApellido((String) jwtObject.get("family_name"));
+		usuario.setImagenUrl((String) jwtObject.get("picture"));
+		usuario.setToken(token);
+
+		usuarioService.createUsuario(usuario);
+
+	}
+
 }
