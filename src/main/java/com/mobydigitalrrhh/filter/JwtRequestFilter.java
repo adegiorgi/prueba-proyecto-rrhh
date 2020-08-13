@@ -20,6 +20,8 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -39,6 +41,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	
   
     @Override
+    @Transactional
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,FilterChain chain)
             throws ServletException, IOException {
     	/*
@@ -65,10 +68,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     			usuario = buscarUsuarioBD(user.getPrincipal().toString());
     			
     			
-    			String usuarioJson = new Gson().toJson(usuario);
-    			System.out.println(usuarioJson);
+    			//String usuarioJson = new Gson().toJson(usuario);
+    			//System.out.println(usuarioJson);
 
-    			response.getWriter().write(usuarioJson);
+    			
+    			String usuarioJson = new Gson().toJson(usuario);
+
+    			PrintWriter out = response.getWriter();
+    			                out.print(usuarioJson);
+    			                out.flush();
+    			
+    			
+    			//response.getWriter().write(usuarioJson);
     			
                response.addHeader(HttpHeaders.AUTHORIZATION, tokenService.generateAppToken(user.getPrincipal().toString()));
     			//parsear el objeto user a JSON y mandarlo por write

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -33,29 +34,29 @@ public class Usuario implements Serializable {
 	@NotBlank(message = "El campo token no puede estar vacío")
 	private String token;
 
-	@OneToMany(mappedBy = "usuario")
-	private List<UsuarioPorRol> usuarioPorRoles;
+	//@OneToMany(mappedBy = "usuario")
+	//private List<UsuarioPorRol> usuarioPorRoles;
 
-	@OneToMany(mappedBy = "usuario")
-	private List<EntrevistadorPorEntrevista> entrevistadoresPorEntrevista;
+	//@OneToMany(mappedBy = "usuario")
+	//private List<EntrevistadorPorEntrevista> entrevistadoresPorEntrevista;
 
 	
 	
-	public List<EntrevistadorPorEntrevista> getEntrevistadoresPorEntrevista() {
-		return entrevistadoresPorEntrevista;
-	}
-
-	public void setEntrevistadoresPorEntrevista(List<EntrevistadorPorEntrevista> entrevistadoresPorEntrevista) {
-		this.entrevistadoresPorEntrevista = entrevistadoresPorEntrevista;
-	}
-
-	public List<UsuarioPorRol> getUsuarioPorRoles() {
-		return usuarioPorRoles;
-	}
-
-	public void setUsuarioPorRoles(List<UsuarioPorRol> usuarioPorRoles) {
-		this.usuarioPorRoles = usuarioPorRoles;
-	}
+//	public List<EntrevistadorPorEntrevista> getEntrevistadoresPorEntrevista() {
+//		return entrevistadoresPorEntrevista;
+//	}
+//
+//	public void setEntrevistadoresPorEntrevista(List<EntrevistadorPorEntrevista> entrevistadoresPorEntrevista) {
+//		this.entrevistadoresPorEntrevista = entrevistadoresPorEntrevista;
+//	}
+//
+//	public List<UsuarioPorRol> getUsuarioPorRoles() {
+//		return usuarioPorRoles;
+//	}
+//
+//	public void setUsuarioPorRoles(List<UsuarioPorRol> usuarioPorRoles) {
+//		this.usuarioPorRoles = usuarioPorRoles;
+//	}
 
 	public String getEmail() {
 		return email;
