@@ -30,9 +30,15 @@ public class Usuario implements Serializable {
 	@NotBlank(message = "El campo imagen no puede estar vacío")
 	@Column(name = "imagen_url")
 	private String imagenUrl;
+	
+//	@OneToMany(mappedBy = "usuario")
+//	private List<TokenDeUsuario> tokenDeUsuario;
+	
+	
+	
+	//@NotBlank(message = "El campo token no puede estar vacío")
+	//private String token;
 
-	@NotBlank(message = "El campo token no puede estar vacío")
-	private String token;
 
 	//@OneToMany(mappedBy = "usuario")
 	//private List<UsuarioPorRol> usuarioPorRoles;
@@ -56,6 +62,14 @@ public class Usuario implements Serializable {
 //
 //	public void setUsuarioPorRoles(List<UsuarioPorRol> usuarioPorRoles) {
 //		this.usuarioPorRoles = usuarioPorRoles;
+//	}
+
+//	public List<TokenDeUsuario> getTokenDeUsuario() {
+//		return tokenDeUsuario;
+//	}
+//
+//	public void setTokenDeUsuario(List<TokenDeUsuario> tokenDeUsuario) {
+//		this.tokenDeUsuario = tokenDeUsuario;
 //	}
 
 	public String getEmail() {
@@ -90,13 +104,13 @@ public class Usuario implements Serializable {
 		this.imagenUrl = imagenUrl;
 	}
 
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
+//	public String getToken() {
+//		return token;
+//	}
+//
+//	public void setToken(String token) {
+//		this.token = token;
+//	}
 
 	private static final long serialVersionUID = 1L;
 

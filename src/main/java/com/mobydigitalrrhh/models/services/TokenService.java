@@ -1,10 +1,12 @@
 package com.mobydigitalrrhh.models.services;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.http.HttpStatus;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.mobydigitalrrhh.configuration.OAuthProperties;
 import com.mobydigitalrrhh.google.GoogleChecker;
+import com.mobydigitalrrhh.models.entities.TokenDeUsuario;
 import com.mobydigitalrrhh.models.entities.Usuario;
 import com.mobydigitalrrhh.repository.UserRepository;
 
@@ -42,6 +45,12 @@ public class TokenService {
 	@Autowired
 	private UsuarioServiceImp usuarioService;
 
+	@Autowired
+	private TokenDeUsuarioServiceImp tokenDeUsuarioService;
+
+	@Autowired
+	private TokenService tokenService;
+
 	public boolean isAuthenticatedToken() {
 		// TODO implement method
 		return false;
@@ -54,6 +63,7 @@ public class TokenService {
 	public UsernamePasswordAuthenticationToken verifyTokenFromGoogle(String token) {
 		String CLIENT_ID = oAuthProperties.getClientId();
 		Usuario usuario = new Usuario();
+		TokenDeUsuario tokenDeUsuario = new TokenDeUsuario();
 		/*
 		 * Obtengo el "authorization token" y lo valido con GoogleChecker googleChecker
 		 * como sigue: Si, el token está validado, obtenemos información de perfil y
@@ -71,11 +81,11 @@ public class TokenService {
 									// {"at_hash":"Z6a2kNmRPCSZlSWMI2brag","aud":"252882737828-4nijfj919fdsokaalhgcada9djg0ttth.apps.googleusercontent.com","azp":"252882737828-4nijfj919fdsokaalhgcada9djg0ttth.apps.googleusercontent.com","email":"igutierrez@mobydigital.com","email_verified":true,"exp":1594589992,"hd":"mobydigital.com","iat":1594586392,"iss":"https://accounts.google.com","nonce":"0YMEgRFNfrN92O9fpNdQdHkkEmwezz0Pctg_ugrY_Rw","sub":"118075249841973988243","name":"Iván
 									// Gutierrez","picture":"https://lh3.googleusercontent.com/a-/AOh14Gi2WUj784hiw9K1yXBtzKBU_rPDYZkrLymdyXUA=s96-c","given_name":"Iván","family_name":"Gutierrez
 									// ","locale":"es"}
-			// verificar si jwtObject.getEmail() existe en la bd.. sino existe hay que 
+			// verificar si jwtObject.getEmail() existe en la bd.. sino existe hay que
 			// crearlo con su rol por defecto retornar siempre el usuario
 			usuario = usuarioService.findByEmail(jwtObject.getEmail());
 			if (usuario == null) {
-				crearUsuario(usuario, jwtObject, token);
+				crearUsuario(usuario, jwtObject, token, tokenDeUsuario);
 			}
 
 			UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
@@ -134,17 +144,51 @@ public class TokenService {
 		return request.getRequestURI().equals(oAuthProperties.getAppTokenURI());
 	}
 
-	public void crearUsuario(Usuario usuario, GoogleIdToken.Payload jwtObject, String token) {
+	public void crearUsuario(Usuario usuario, GoogleIdToken.Payload jwtObject, String token,
+			TokenDeUsuario tokenDeUsuario) {
 
 		usuario = new Usuario();
 		usuario.setEmail(jwtObject.getEmail());
 		usuario.setNombre((String) jwtObject.get("given_name"));
 		usuario.setApellido((String) jwtObject.get("family_name"));
 		usuario.setImagenUrl((String) jwtObject.get("picture"));
-		usuario.setToken(token);
-
 		usuarioService.createUsuario(usuario);
+
+		tokenDeUsuario = new TokenDeUsuario();
+		tokenDeUsuario.setUsuario(usuario);
+		tokenDeUsuario.setEmailUser(jwtObject.getEmail());
+		tokenDeUsuario.setIdToken(token);
+		tokenDeUsuarioService.crearTokenDeUsuario(tokenDeUsuario);
 
 	}
 
+	public UsernamePasswordAuthenticationToken validarYdevolverUsuario(String token, HttpServletRequest request)
+			throws ServletException, Exception {
+		/*
+		 * Por medio de tokenService.verifyTokenFromGoogle(token);, verificamos que
+		 * realmente el token viene de una cuenta logueada por Google.
+		 */
+		UsernamePasswordAuthenticationToken user = verifyTokenFromGoogle(token);
+		/*
+		 * Una vez validado el token, hacemos otra validación para ver si el token
+		 * (definido en la variable "user") NO es null.
+		 */
+		if (user != null) {
+			/*
+			 * Si el user NO es null, entonces significa que está en nuestro sistema.
+			 */
+			user.setDetails(new WebAuthenticationDetailsSource().buildDetails(request)); // Optional
+			/*
+			 * BD Creamos el contexto para que todo el sistema pueda estar seguro de que el
+			 * user está logueado.
+			 * 
+			 * [ANOTACIÓN] El user debería extender de la clase "Authentication" para
+			 * enviarlo directamente. (VER ---> ".setAuthentication(user)" para tomar de
+			 * referencia los parámetros.)
+			 */
+			return user;
+		} else {
+			throw new Exception();
+		}
+	}
 }
