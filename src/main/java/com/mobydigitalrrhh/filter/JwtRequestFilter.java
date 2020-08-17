@@ -12,10 +12,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.google.gson.Gson;
+import com.mobydigitalrrhh.models.dto.UserTokenDto;
 import com.mobydigitalrrhh.models.entities.TokenDeUsuario;
 import com.mobydigitalrrhh.models.entities.Usuario;
 import com.mobydigitalrrhh.models.services.TokenDeUsuarioServiceImp;
 import com.mobydigitalrrhh.models.services.TokenService;
+import com.mobydigitalrrhh.models.services.UserTokenDtoSeriveImp;
 import com.mobydigitalrrhh.models.services.UsuarioServiceImp;
 
 import javax.servlet.FilterChain;
@@ -43,6 +45,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 	@Autowired
 	private TokenDeUsuarioServiceImp tokenDeUsuarioService;
+	
+	@Autowired
+	private UserTokenDtoSeriveImp userTokenDtoService;
 
 	@Override
 	@Transactional
@@ -55,6 +60,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 		// Usuario usuario = new Usuario();
 		TokenDeUsuario tokenDeUsuario = new TokenDeUsuario();
+		UserTokenDto userTokenDto = new UserTokenDto();
 		// TokenDeUsuario tokenDeUsuarioFULL = new TokenDeUsuario();
 		/*
 		 * Pregunto si la request es un POST y si NO es null, hago lo que sigue.
@@ -76,10 +82,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				String email = user.getPrincipal().toString();
 				tokenDeUsuario = tokenDeUsuarioService.findUsuarioByEmailUser(email);
 
-				guardarAppToken(tokenDeUsuario, appToken, email);
+				guardarAppToken(tokenDeUsuario, appToken);
 
-				tokenDeUsuario = tokenDeUsuarioService.findUsuarioByEmailUser(email);
-				String usuarioJsonFULL = gson.toJson(tokenDeUsuario);
+				//tokenDeUsuario = tokenDeUsuarioService.findUsuarioByEmailUser(email);
+				userTokenDto = userTokenDtoService.traerUsuarioyToken(email);
+				
+				String usuarioJsonFULL = gson.toJson(userTokenDto);
 
 				PrintWriter out = response.getWriter();
 				out.print(usuarioJsonFULL);
@@ -113,7 +121,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 	}
 
-	private void guardarAppToken(TokenDeUsuario tokenDeUsuario, String appToken, String email) {
+	private void guardarAppToken(TokenDeUsuario tokenDeUsuario, String appToken) {
 
 		tokenDeUsuario.setAppToken(appToken);
 		tokenDeUsuarioService.crearTokenDeUsuario(tokenDeUsuario);

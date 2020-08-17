@@ -35,9 +35,6 @@ public class Usuario implements Serializable {
 //	private List<TokenDeUsuario> tokenDeUsuario;
 	
 	
-	
-	//@NotBlank(message = "El campo token no puede estar vacío")
-	//private String token;
 
 
 	//@OneToMany(mappedBy = "usuario")

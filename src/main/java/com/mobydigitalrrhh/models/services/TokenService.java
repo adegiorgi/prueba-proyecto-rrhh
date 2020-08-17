@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.mobydigitalrrhh.configuration.OAuthProperties;
 import com.mobydigitalrrhh.google.GoogleChecker;
+import com.mobydigitalrrhh.models.dto.UserTokenDto;
 import com.mobydigitalrrhh.models.entities.TokenDeUsuario;
 import com.mobydigitalrrhh.models.entities.Usuario;
 import com.mobydigitalrrhh.repository.UserRepository;
@@ -86,6 +87,12 @@ public class TokenService {
 			usuario = usuarioService.findByEmail(jwtObject.getEmail());
 			if (usuario == null) {
 				crearUsuario(usuario, jwtObject, token, tokenDeUsuario);
+			}
+			else{
+				 tokenDeUsuario = tokenDeUsuarioService.findUsuarioByEmailUser(jwtObject.getEmail());
+				 if(token!=tokenDeUsuario.getIdToken()) {
+					 actualizaridToken(tokenDeUsuario,token);
+				 }
 			}
 
 			UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
@@ -153,13 +160,17 @@ public class TokenService {
 		usuario.setApellido((String) jwtObject.get("family_name"));
 		usuario.setImagenUrl((String) jwtObject.get("picture"));
 		usuarioService.createUsuario(usuario);
-
+		
 		tokenDeUsuario = new TokenDeUsuario();
-		tokenDeUsuario.setUsuario(usuario);
 		tokenDeUsuario.setEmailUser(jwtObject.getEmail());
 		tokenDeUsuario.setIdToken(token);
 		tokenDeUsuarioService.crearTokenDeUsuario(tokenDeUsuario);
 
+	}
+	public void actualizaridToken(TokenDeUsuario tokenDeUsuario, String token) {		
+		
+		tokenDeUsuario.setIdToken(token);
+		tokenDeUsuarioService.crearTokenDeUsuario(tokenDeUsuario);
 	}
 
 	public UsernamePasswordAuthenticationToken validarYdevolverUsuario(String token, HttpServletRequest request)

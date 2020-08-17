@@ -15,20 +15,23 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tokensporusuario")
-//borrar el id, dejar como id el EMAIL, crear una clase(no entidad) nueva uniendo usaurio con sus token y traer por consulta la info
-//desvincular las tablas tokendeusuario y usuario.
 public class TokenDeUsuario implements Serializable {
 
-	@Id
-	@Column(name = "id_token_por_usuario")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer idTokenPorUsuario;
+//	@Id
+//	@Column(name = "id_token_por_usuario")
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	private Integer idTokenPorUsuario;
 
-	@JoinColumn(name = "email", referencedColumnName = "email")
-	@OneToOne
-	private Usuario usuario;
+//	@JoinColumn(name = "email", referencedColumnName = "email")
+//	@OneToOne
+//	private Usuario usuario;
 	
-	@Column(name ="email_user")
+	//borrar el id, dejar como id el EMAIL, crear una clase(no entidad) nueva uniendo usaurio con sus token y traer por consulta la info
+	//desvincular las tablas tokendeusuario y usuario.
+	
+	
+	@Id
+	@Column(name ="email")
 	private String emailUser;
 	
 
@@ -42,13 +45,13 @@ public class TokenDeUsuario implements Serializable {
 	private String authToken;
 
 	
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
+//	public Usuario getUsuario() {
+//		return usuario;
+//	}
+//
+//	public void setUsuario(Usuario usuario) {
+//		this.usuario = usuario;
+//	}
 	
 	public String getEmailUser() {
 		return emailUser;
@@ -58,13 +61,13 @@ public class TokenDeUsuario implements Serializable {
 		this.emailUser = emailUser;
 	}
 
-	public Integer getIdTokenPorUsuario() {
-		return idTokenPorUsuario;
-	}
-
-	public void setIdTokenPorUsuario(Integer idTokenPorUsuario) {
-		this.idTokenPorUsuario = idTokenPorUsuario;
-	}
+//	public Integer getIdTokenPorUsuario() {
+//		return idTokenPorUsuario;
+//	}
+//
+//	public void setIdTokenPorUsuario(Integer idTokenPorUsuario) {
+//		this.idTokenPorUsuario = idTokenPorUsuario;
+//	}
 
 	
 	public String getIdToken() {
