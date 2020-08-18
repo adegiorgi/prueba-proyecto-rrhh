@@ -19,7 +19,7 @@ public class UserTokenDto implements Serializable{
 	private String imagenURL;
 
 	private String appToken;
-	private String idToken;
+	//private String idToken;
 	private String authToken;
 	
 	
@@ -54,12 +54,7 @@ public class UserTokenDto implements Serializable{
 	public void setAppToken(String appToken) {
 		this.appToken = appToken;
 	}
-	public String getIdToken() {
-		return idToken;
-	}
-	public void setIdToken(String idToken) {
-		this.idToken = idToken;
-	}
+
 	public String getAuthToken() {
 		return authToken;
 	}

@@ -26,7 +26,8 @@ public class TokenDeUsuario implements Serializable {
 //	@OneToOne
 //	private Usuario usuario;
 	
-	//borrar el id, dejar como id el EMAIL, crear una clase(no entidad) nueva uniendo usaurio con sus token y traer por consulta la info
+	//borrar el id, dejar como id el EMAIL, crear una clase(no entidad) nueva uniendo usaurio con sus token y 
+	//traer por consulta la info
 	//desvincular las tablas tokendeusuario y usuario.
 	
 	

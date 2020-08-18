@@ -9,8 +9,8 @@ import com.mobydigitalrrhh.models.dto.UserTokenDto;
 public interface IUserTokenDtoDAO  extends JpaRepository<UserTokenDto, String>{
 
 
-	String consulta = "select u.email,u.nombre,u.apellido,u.imagen_url,tu.app_token,tu.auth_token,tu.id_token "
-			+ "from usuarios u join tokensporusuario tu  where  u.email= :email";
+	String consulta = "select u.email,u.nombre,u.apellido,u.imagen_url,tu.app_token,tu.auth_token "
+			+ "from usuarios u join tokensporusuario tu  where  u.email=tu.email and tu.email= :email";
 	@Query(value = consulta , nativeQuery = true)
 	public UserTokenDto traerUsuarioyToken(@Param("email") String email);
 }

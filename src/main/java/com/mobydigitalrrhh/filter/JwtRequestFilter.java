@@ -57,8 +57,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		 * Obtengo el token.
 		 */
 		final String token = tokenService.getTokenFromRequest(request); // Obtiene el token de la request.
+		String authToken =request.getHeader("authToken");
+		
 
-		// Usuario usuario = new Usuario();
 		TokenDeUsuario tokenDeUsuario = new TokenDeUsuario();
 		UserTokenDto userTokenDto = new UserTokenDto();
 		// TokenDeUsuario tokenDeUsuarioFULL = new TokenDeUsuario();
@@ -82,7 +83,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				String email = user.getPrincipal().toString();
 				tokenDeUsuario = tokenDeUsuarioService.findUsuarioByEmailUser(email);
 
-				guardarAppToken(tokenDeUsuario, appToken);
+				guardarAppToken(tokenDeUsuario, appToken, authToken);
 
 				//tokenDeUsuario = tokenDeUsuarioService.findUsuarioByEmailUser(email);
 				userTokenDto = userTokenDtoService.traerUsuarioyToken(email);
@@ -114,16 +115,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		return user;
 	}
 
-	private Usuario buscarUsuarioBD(String email) {
 
-		System.out.println(usuarioService.findByEmail(email).toString());
-		return usuarioService.findByEmail(email);
-
-	}
-
-	private void guardarAppToken(TokenDeUsuario tokenDeUsuario, String appToken) {
+	private void guardarAppToken(TokenDeUsuario tokenDeUsuario, String appToken,String authToken) {
 
 		tokenDeUsuario.setAppToken(appToken);
+		tokenDeUsuario.setAuthToken(authToken);
 		tokenDeUsuarioService.crearTokenDeUsuario(tokenDeUsuario);
 	}
 
