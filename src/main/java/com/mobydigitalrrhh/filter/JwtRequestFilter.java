@@ -49,7 +49,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		String authToken = request.getHeader("authToken");
 
 		TokenDeUsuario tokenDeUsuario = new TokenDeUsuario();
-		UserToken userTokenDto = new UserToken();
+		UserToken userTokenView = new UserToken();
 		// TokenDeUsuario tokenDeUsuarioFULL = new TokenDeUsuario();
 		/*
 		 * Pregunto si la request es un POST y si NO es null, hago lo que sigue.
@@ -74,9 +74,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 				guardarAppToken(tokenDeUsuario, appToken, authToken);
 
-				userTokenDto = tokenDeUsuarioService.getUserTokenView(email);
+				userTokenView = tokenDeUsuarioService.getUserTokenView(email);
 
-				String usuarioJsonFULL = gson.toJson(userTokenDto);
+				String usuarioJsonFULL = gson.toJson(userTokenView);
 
 				PrintWriter out = response.getWriter();
 				out.print(usuarioJsonFULL);

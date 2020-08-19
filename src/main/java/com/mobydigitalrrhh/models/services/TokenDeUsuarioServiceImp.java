@@ -33,7 +33,7 @@ public class TokenDeUsuarioServiceImp implements ITokenDeUsuarioService {
 		TokenDeUsuario tokenUsuario = this.findUsuarioByEmailUser(email);
 		Usuario usuario = usuarioService.findByEmail(email);
 		UserToken userToken = new UserToken();
-		userToken.setEmail(tokenUsuario.getEmailUser());
+		userToken.setEmail(usuario.getEmail());
 		userToken.setNombre(usuario.getNombre());
 		userToken.setApellido(usuario.getApellido());
 		userToken.setImagenURL(usuario.getImagenUrl());
