@@ -44,6 +44,9 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 				 * Acá obtenemos el usuario y lo cargamos en el contexto.
 				 */
 				Authentication user = tokenService.verifyAppToken(token);
+				if(user==null) {
+					response.sendError(HttpStatus.SC_FORBIDDEN);
+				}
 				SecurityContextHolder.getContext().setAuthentication(user);
 				chain.doFilter(request, response);
 				/*

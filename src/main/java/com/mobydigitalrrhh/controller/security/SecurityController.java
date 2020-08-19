@@ -8,7 +8,7 @@ public class SecurityController {
 	
 	@PostMapping("/oauth/app_token")
 	private String getAppToken() {
-		return "";
+		return "hola como estan";
 	}
 	
 }

@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.mobydigitalrrhh.models.entities.Persona;
+import com.mobydigitalrrhh.models.entities.Usuario;
 import com.mobydigitalrrhh.models.services.PersonaServiceImp;
+import com.mobydigitalrrhh.models.services.UsuarioServiceImp;
 
 @CrossOrigin(origins =  "*") //otorgamos permiso a esta URL de todas las request.
 @RequestMapping(value = "/api")
@@ -18,11 +20,24 @@ public class PersonaRestController {
 	
 	@Autowired
 	private PersonaServiceImp personaService;
+	
+	@Autowired
+	private UsuarioServiceImp usuarioService;
 
 	@GetMapping(value = "/listaPersonas")
 	public ResponseEntity<Object> listaPersonas() {
 		try {
 			return new ResponseEntity<Object>(personaService.listaPersonas(), HttpStatus.OK);
+		} catch (DataAccessException e) {
+			e.printStackTrace(System.out);
+			return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(value = "/listaUsuarios")
+	public ResponseEntity<Object> listaUsuarios() {
+		try {
+			return new ResponseEntity<Object>(usuarioService.findAllUsuarios(), HttpStatus.OK);
 		} catch (DataAccessException e) {
 			e.printStackTrace(System.out);
 			return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -64,6 +79,23 @@ public class PersonaRestController {
 		}
 		respuesta.put("Mensaje", "El formulario se creó con éxito.");
 		respuesta.put("Formulario", nuevaPersona);
+		return new ResponseEntity<Object>(respuesta, HttpStatus.CREATED);
+	}
+	
+	@PostMapping(value = "/crearUsuario")
+	public ResponseEntity<Object> crearUsuario(@RequestBody Usuario usuario) {
+		Usuario nuevoUsuario = null;
+		Map<String, Object> respuesta = new HashMap<>();
+
+		try {
+			nuevoUsuario = usuarioService.createUsuario(usuario);
+		} catch (DataAccessException e) {
+			respuesta.put("Mensaje", "Error al querer realizar la consulta en la DB.");
+			respuesta.put("Error", e.getMessage());
+			return new ResponseEntity<Object>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		respuesta.put("Mensaje", "El formulario se creó con éxito.");
+		respuesta.put("Creacion de usuario", nuevoUsuario);
 		return new ResponseEntity<Object>(respuesta, HttpStatus.CREATED);
 	}
 

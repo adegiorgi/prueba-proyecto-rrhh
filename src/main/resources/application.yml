@@ -62,8 +62,10 @@ spring:
 
 # Configuración de OAuth
 oauth:
-  clientId: 476890059837-1bnb0vheu7ulrfq914ma0tnvi6plp4ai.apps.googleusercontent.com # get a client-id from https://console.developers.google.com/
-  clientSecret: 0Mqb34KH8juRWh-Tocm2pykJ # get a client-secret from https://console.developers.google.com/
+  #clientId: 476890059837-1bnb0vheu7ulrfq914ma0tnvi6plp4ai.apps.googleusercontent.com # get a client-id from https://console.developers.google.com/
+  #clientSecret: 0Mqb34KH8juRWh-Tocm2pykJ # get a client-secret from https://console.developers.google.com/
+  clientId: 190515354858-mis3sat1pav351u57rub33l9a60ckd9b.apps.googleusercontent.com
+  clientSecret: OTXYdP4dI_Qt7HZKtJTTMXbE
   checkTokenUrl: https://oauth2.googleapis.com/tokeninfo?id_token={accessToken}
   userInfoUrl: https://www.googleapis.com/oauth2/v3/userinfo
   appTokenURI: /oauth/app_token
