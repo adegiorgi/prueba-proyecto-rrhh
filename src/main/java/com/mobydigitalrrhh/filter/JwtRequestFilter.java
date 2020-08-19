@@ -2,24 +2,19 @@ package com.mobydigitalrrhh.filter;
 
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import com.google.gson.Gson;
 import com.mobydigitalrrhh.models.dto.UserTokenDto;
 import com.mobydigitalrrhh.models.entities.TokenDeUsuario;
-import com.mobydigitalrrhh.models.entities.Usuario;
 import com.mobydigitalrrhh.models.services.TokenDeUsuarioServiceImp;
 import com.mobydigitalrrhh.models.services.TokenService;
 import com.mobydigitalrrhh.models.services.UserTokenDtoSeriveImp;
-import com.mobydigitalrrhh.models.services.UsuarioServiceImp;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -41,11 +36,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	private Gson gson = new Gson();
 
 	@Autowired
-	private UsuarioServiceImp usuarioService;
-
-	@Autowired
 	private TokenDeUsuarioServiceImp tokenDeUsuarioService;
-	
+
 	@Autowired
 	private UserTokenDtoSeriveImp userTokenDtoService;
 
@@ -57,8 +49,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		 * Obtengo el token.
 		 */
 		final String token = tokenService.getTokenFromRequest(request); // Obtiene el token de la request.
-		String authToken =request.getHeader("authToken");
-		
+		String authToken = request.getHeader("authToken");
 
 		TokenDeUsuario tokenDeUsuario = new TokenDeUsuario();
 		UserTokenDto userTokenDto = new UserTokenDto();
@@ -81,19 +72,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 				String appToken = tokenService.generateAppToken(user.getPrincipal().toString());
 				String email = user.getPrincipal().toString();
+
 				tokenDeUsuario = tokenDeUsuarioService.findUsuarioByEmailUser(email);
 
 				guardarAppToken(tokenDeUsuario, appToken, authToken);
 
-				//tokenDeUsuario = tokenDeUsuarioService.findUsuarioByEmailUser(email);
 				userTokenDto = userTokenDtoService.traerUsuarioyToken(email);
-				
+
 				String usuarioJsonFULL = gson.toJson(userTokenDto);
 
 				PrintWriter out = response.getWriter();
 				out.print(usuarioJsonFULL);
 				out.flush();
-				// response.addHeader(HttpHeaders.AUTHORIZATION,tokenService.generateAppToken(user.getPrincipal().toString())
 
 			} catch (Exception e) {
 				response.sendError(HttpStatus.SC_FORBIDDEN);
@@ -108,15 +98,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		return request.getMethod().equals(HttpMethod.POST.name());
 	}
 
-	// este meotodo loadAuthenticationContext debería estar en tokenService
 	private Authentication loadAuthenticationContext(String token, HttpServletRequest request) throws Exception {
 		UsernamePasswordAuthenticationToken user = tokenService.validarYdevolverUsuario(token, request);
 		SecurityContextHolder.getContext().setAuthentication(user);
 		return user;
 	}
 
-
-	private void guardarAppToken(TokenDeUsuario tokenDeUsuario, String appToken,String authToken) {
+	private void guardarAppToken(TokenDeUsuario tokenDeUsuario, String appToken, String authToken) {
 
 		tokenDeUsuario.setAppToken(appToken);
 		tokenDeUsuario.setAuthToken(authToken);

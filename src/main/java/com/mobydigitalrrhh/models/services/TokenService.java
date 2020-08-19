@@ -1,32 +1,24 @@
 package com.mobydigitalrrhh.models.services;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
-
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.mobydigitalrrhh.configuration.OAuthProperties;
 import com.mobydigitalrrhh.google.GoogleChecker;
-import com.mobydigitalrrhh.models.dto.UserTokenDto;
 import com.mobydigitalrrhh.models.entities.TokenDeUsuario;
 import com.mobydigitalrrhh.models.entities.Usuario;
-import com.mobydigitalrrhh.repository.UserRepository;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -41,16 +33,10 @@ public class TokenService {
 	private OAuthProperties oAuthProperties;
 
 	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
 	private UsuarioServiceImp usuarioService;
 
 	@Autowired
 	private TokenDeUsuarioServiceImp tokenDeUsuarioService;
-
-	@Autowired
-	private TokenService tokenService;
 
 	public boolean isAuthenticatedToken() {
 		// TODO implement method
@@ -78,21 +64,27 @@ public class TokenService {
 		GoogleChecker googleChecker = new GoogleChecker(new String[] { CLIENT_ID }, CLIENT_ID);
 
 		GoogleIdToken.Payload jwtObject = googleChecker.check(token);
-		if (jwtObject != null) { // jwtObject.get("given_name")
-									// {"at_hash":"Z6a2kNmRPCSZlSWMI2brag","aud":"252882737828-4nijfj919fdsokaalhgcada9djg0ttth.apps.googleusercontent.com","azp":"252882737828-4nijfj919fdsokaalhgcada9djg0ttth.apps.googleusercontent.com","email":"igutierrez@mobydigital.com","email_verified":true,"exp":1594589992,"hd":"mobydigital.com","iat":1594586392,"iss":"https://accounts.google.com","nonce":"0YMEgRFNfrN92O9fpNdQdHkkEmwezz0Pctg_ugrY_Rw","sub":"118075249841973988243","name":"Iván
-									// Gutierrez","picture":"https://lh3.googleusercontent.com/a-/AOh14Gi2WUj784hiw9K1yXBtzKBU_rPDYZkrLymdyXUA=s96-c","given_name":"Iván","family_name":"Gutierrez
-									// ","locale":"es"}
+		if (jwtObject != null) {
 			// verificar si jwtObject.getEmail() existe en la bd.. sino existe hay que
 			// crearlo con su rol por defecto retornar siempre el usuario
+			// FALTA ASIGNACION DE ROLES!
 			usuario = usuarioService.findByEmail(jwtObject.getEmail());
 			if (usuario == null) {
-				crearUsuario(usuario, jwtObject, token, tokenDeUsuario);
-			}
-			else{
-				 tokenDeUsuario = tokenDeUsuarioService.findUsuarioByEmailUser(jwtObject.getEmail());
-				 if(token!=tokenDeUsuario.getIdToken()) {
-					 actualizaridToken(tokenDeUsuario,token);
-				 }
+				try {
+					crearUsuario(usuario, jwtObject, token, tokenDeUsuario);
+				} catch (DataAccessException e) {
+					e.printStackTrace(System.out);
+				}
+
+			} else {
+				tokenDeUsuario = tokenDeUsuarioService.findUsuarioByEmailUser(jwtObject.getEmail());
+				if (token != tokenDeUsuario.getIdToken()) {
+					try {
+						actualizaridToken(tokenDeUsuario, token);
+					} catch (DataAccessException e) {
+						e.printStackTrace(System.out);
+					}
+				}
 			}
 
 			UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
@@ -104,14 +96,22 @@ public class TokenService {
 	}
 
 	public UsernamePasswordAuthenticationToken verifyAppToken(String token) {
+		Usuario usuario = new Usuario();
+		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = null;
 		// {jti=softtekJWT, sub=igutierrez@mobydigital.com, authorities=[ROLE_USER],
 		// iat=1594690351, exp=1594690951}
 		Claims claims = Jwts.parser().setSigningKey(oAuthProperties.getSecretKey().getBytes()).parseClaimsJws(token)
 				.getBody();
 		// verificar en la BD si existe ese usuario con claims.getSubject(), si existe
 		// genero el objeto usuario para el contexto
-		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-				claims.getSubject(), null, new ArrayList<>());
+		usuario = usuarioService.findByEmail(claims.getSubject());
+		if (usuario != null) {
+
+			usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(claims.getSubject(), null,
+					new ArrayList<>());
+
+		}
+
 		return usernamePasswordAuthenticationToken;
 	}
 
@@ -160,15 +160,16 @@ public class TokenService {
 		usuario.setApellido((String) jwtObject.get("family_name"));
 		usuario.setImagenUrl((String) jwtObject.get("picture"));
 		usuarioService.createUsuario(usuario);
-		
+
 		tokenDeUsuario = new TokenDeUsuario();
 		tokenDeUsuario.setEmailUser(jwtObject.getEmail());
 		tokenDeUsuario.setIdToken(token);
 		tokenDeUsuarioService.crearTokenDeUsuario(tokenDeUsuario);
 
 	}
-	public void actualizaridToken(TokenDeUsuario tokenDeUsuario, String token) {		
-		
+
+	public void actualizaridToken(TokenDeUsuario tokenDeUsuario, String token) {
+
 		tokenDeUsuario.setIdToken(token);
 		tokenDeUsuarioService.crearTokenDeUsuario(tokenDeUsuario);
 	}

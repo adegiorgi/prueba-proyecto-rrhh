@@ -19,7 +19,6 @@ public class UserTokenDto implements Serializable{
 	private String imagenURL;
 
 	private String appToken;
-	//private String idToken;
 	private String authToken;
 	
 	
