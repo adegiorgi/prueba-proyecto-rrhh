@@ -25,12 +25,15 @@ public class UsuarioPorRol implements Serializable {
 	@NotBlank
 	private Integer idUsuarioPorRol;
 
-	@JoinColumn(name = "email", referencedColumnName = "email")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	//@JoinColumn(name = "email", referencedColumnName = "email")
+	//@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne
+	//usuario_email
 	private Usuario usuario;
 
-	@JoinColumn(name = "id_rol", referencedColumnName = "id_rol")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	//@JoinColumn(name = "id_rol", referencedColumnName = "id_rol")
+	//@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne
 	private Rol rol;
 
 	public Integer getIdUsuarioPorRol() {
