@@ -1,10 +1,13 @@
 package com.mobydigitalrrhh.models.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -28,41 +31,27 @@ public class Usuario implements Serializable {
 	@Column(name = "imagen_url")
 	private String imagenUrl;
 
-//	@OneToMany(mappedBy = "usuario")
-//	private List<TokenDeUsuario> tokenDeUsuario;
-
-	// @OneToMany(mappedBy = "usuario")
-	// private List<UsuarioPorRol> usuarioPorRoles;
+	 //@OneToMany(mappedBy = "usuario")
+	 //capas que no trae los roles porque esta por defecto lazy
+	 @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario", orphanRemoval = true)
+	 private List<UsuarioPorRol> usuarioPorRoles;
 
 	// @OneToMany(mappedBy = "usuario")
 	// private List<EntrevistadorPorEntrevista> entrevistadoresPorEntrevista;
 
-//	public List<EntrevistadorPorEntrevista> getEntrevistadoresPorEntrevista() {
-//		return entrevistadoresPorEntrevista;
-//	}
-//
-//	public void setEntrevistadoresPorEntrevista(List<EntrevistadorPorEntrevista> entrevistadoresPorEntrevista) {
-//		this.entrevistadoresPorEntrevista = entrevistadoresPorEntrevista;
-//	}
-//
-//	public List<UsuarioPorRol> getUsuarioPorRoles() {
-//		return usuarioPorRoles;
-//	}
-//
-//	public void setUsuarioPorRoles(List<UsuarioPorRol> usuarioPorRoles) {
-//		this.usuarioPorRoles = usuarioPorRoles;
-//	}
-
-//	public List<TokenDeUsuario> getTokenDeUsuario() {
-//		return tokenDeUsuario;
-//	}
-//
-//	public void setTokenDeUsuario(List<TokenDeUsuario> tokenDeUsuario) {
-//		this.tokenDeUsuario = tokenDeUsuario;
-//	}
+	 
+	 
 
 	public String getEmail() {
 		return email;
+	}
+
+	public List<UsuarioPorRol> getUsuarioPorRoles() {
+		return usuarioPorRoles;
+	}
+
+	public void setUsuarioPorRoles(List<UsuarioPorRol> usuarioPorRoles) {
+		this.usuarioPorRoles = usuarioPorRoles;
 	}
 
 	public void setEmail(String email) {

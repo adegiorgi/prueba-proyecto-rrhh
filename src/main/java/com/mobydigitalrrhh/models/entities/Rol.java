@@ -3,6 +3,7 @@ package com.mobydigitalrrhh.models.entities;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +27,8 @@ public class Rol implements Serializable {
 	private String nombre;
 	private String descripcion;
 	
-	@OneToMany(mappedBy = "rol")
+	//@OneToMany(mappedBy = "rol")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "rol", orphanRemoval = true)
 	private List<UsuarioPorRol> usuarioPorRoles;
 	
 	public List<UsuarioPorRol> getUsuarioPorRoles() {

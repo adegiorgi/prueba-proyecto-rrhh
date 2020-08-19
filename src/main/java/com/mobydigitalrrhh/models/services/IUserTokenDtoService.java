@@ -1,8 +1,8 @@
 package com.mobydigitalrrhh.models.services;
 
-import com.mobydigitalrrhh.models.dto.UserTokenDto;
+import com.mobydigitalrrhh.models.views.UserToken;
 
 public interface IUserTokenDtoService {
 
-	public UserTokenDto traerUsuarioyToken(String email);
+	public UserToken traerUsuarioyToken(String email);
 }

@@ -9,11 +9,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import com.google.gson.Gson;
-import com.mobydigitalrrhh.models.dto.UserTokenDto;
 import com.mobydigitalrrhh.models.entities.TokenDeUsuario;
 import com.mobydigitalrrhh.models.services.TokenDeUsuarioServiceImp;
 import com.mobydigitalrrhh.models.services.TokenService;
-import com.mobydigitalrrhh.models.services.UserTokenDtoSeriveImp;
+import com.mobydigitalrrhh.models.views.UserToken;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,8 +37,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@Autowired
 	private TokenDeUsuarioServiceImp tokenDeUsuarioService;
 
-	@Autowired
-	private UserTokenDtoSeriveImp userTokenDtoService;
 
 	@Override
 	@Transactional
@@ -51,7 +49,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		String authToken = request.getHeader("authToken");
 
 		TokenDeUsuario tokenDeUsuario = new TokenDeUsuario();
-		UserTokenDto userTokenDto = new UserTokenDto();
+		UserToken userTokenDto = new UserToken();
 		// TokenDeUsuario tokenDeUsuarioFULL = new TokenDeUsuario();
 		/*
 		 * Pregunto si la request es un POST y si NO es null, hago lo que sigue.
@@ -76,7 +74,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 				guardarAppToken(tokenDeUsuario, appToken, authToken);
 
-				userTokenDto = userTokenDtoService.traerUsuarioyToken(email);
+				userTokenDto = tokenDeUsuarioService.getUserTokenView(email);
 
 				String usuarioJsonFULL = gson.toJson(userTokenDto);
 

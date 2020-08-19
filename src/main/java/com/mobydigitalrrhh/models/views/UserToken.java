@@ -1,23 +1,11 @@
-package com.mobydigitalrrhh.models.dto;
+package com.mobydigitalrrhh.models.views;
 
-import java.io.Serializable;
+public class UserToken {
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name ="user_token_dto")
-public class UserTokenDto implements Serializable{
-	
-	@Id
 	private String email;
 	private String nombre;
 	private String apellido;
-	@Column(name ="imagen_url")
 	private String imagenURL;
-
 	private String appToken;
 	private String authToken;
 	
@@ -61,6 +49,4 @@ public class UserTokenDto implements Serializable{
 		this.authToken = authToken;
 	}
 	
-	private static final long serialVersionUID = 1L;
-		
 }
