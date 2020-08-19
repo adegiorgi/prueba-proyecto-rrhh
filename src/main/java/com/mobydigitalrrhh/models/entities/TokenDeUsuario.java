@@ -17,43 +17,19 @@ import javax.persistence.Table;
 @Table(name = "tokensporusuario")
 public class TokenDeUsuario implements Serializable {
 
-//	@Id
-//	@Column(name = "id_token_por_usuario")
-//	@GeneratedValue(strategy = GenerationType.AUTO)
-//	private Integer idTokenPorUsuario;
-
-//	@JoinColumn(name = "email", referencedColumnName = "email")
-//	@OneToOne
-//	private Usuario usuario;
-	
-	//borrar el id, dejar como id el EMAIL, crear una clase(no entidad) nueva uniendo usaurio con sus token y 
-	//traer por consulta la info
-	//desvincular las tablas tokendeusuario y usuario.
-	
-	
 	@Id
-	@Column(name ="email")
+	@Column(name = "email")
 	private String emailUser;
-	
 
-	@Column(name = "id_token",length=2000)
+	@Column(name = "id_token", length = 2000)
 	private String idToken;
 
-	@Column(name = "app_token",length=2000)
+	@Column(name = "app_token", length = 2000)
 	private String appToken;
 
-	@Column(name = "auth_token",length=2000)
+	@Column(name = "auth_token", length = 2000)
 	private String authToken;
 
-	
-//	public Usuario getUsuario() {
-//		return usuario;
-//	}
-//
-//	public void setUsuario(Usuario usuario) {
-//		this.usuario = usuario;
-//	}
-	
 	public String getEmailUser() {
 		return emailUser;
 	}
@@ -62,15 +38,6 @@ public class TokenDeUsuario implements Serializable {
 		this.emailUser = emailUser;
 	}
 
-//	public Integer getIdTokenPorUsuario() {
-//		return idTokenPorUsuario;
-//	}
-//
-//	public void setIdTokenPorUsuario(Integer idTokenPorUsuario) {
-//		this.idTokenPorUsuario = idTokenPorUsuario;
-//	}
-
-	
 	public String getIdToken() {
 		return idToken;
 	}
