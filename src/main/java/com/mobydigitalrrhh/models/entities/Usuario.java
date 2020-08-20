@@ -6,14 +6,20 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "usuarios")
+@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@id")
 public class Usuario implements Serializable {
 
 	@Id
@@ -32,16 +38,10 @@ public class Usuario implements Serializable {
 	private String imagenUrl;
 
 	 //@OneToMany(mappedBy = "usuario")
-	 //capas que no trae los roles porque esta por defecto lazy
-	 @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario", orphanRemoval = true)
+	 @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario", orphanRemoval = true, fetch = FetchType.EAGER)
+	 @JsonManagedReference
 	 private List<UsuarioPorRol> usuarioPorRoles;
-
-	// @OneToMany(mappedBy = "usuario")
-	// private List<EntrevistadorPorEntrevista> entrevistadoresPorEntrevista;
-
 	 
-	 
-
 	public String getEmail() {
 		return email;
 	}
@@ -89,7 +89,15 @@ public class Usuario implements Serializable {
 //	public void setToken(String token) {
 //		this.token = token;
 //	}
+	
+	
 
 	private static final long serialVersionUID = 1L;
+
+	@Override
+	public String toString() {
+		return "Usuario [email=" + email + ", nombre=" + nombre + ", apellido=" + apellido + ", imagenUrl=" + imagenUrl
+				+ ", usuarioPorRoles=" + usuarioPorRoles + "]";
+	}
 
 }
