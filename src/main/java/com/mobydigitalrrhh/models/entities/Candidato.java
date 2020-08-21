@@ -19,8 +19,6 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "candidatos")
-
-//ver MOCKUP, falta "perfilado"
 public class Candidato implements Serializable {
 
 	@Id
@@ -38,15 +36,15 @@ public class Candidato implements Serializable {
 	private String telefono;
 
 	@JoinColumn(name = "id_estado_civil", referencedColumnName = "id_estado_civil")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private EstadoCivil estadoCivil;
 
 	@JoinColumn(name = "id_localidad", referencedColumnName = "id_localidad")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Localidad localidad;
 
 	@JoinColumn(name = "id_origen_contacto", referencedColumnName = "id_origen_contacto")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private OrigenContacto origenContacto;
 
 	private String domicilio;

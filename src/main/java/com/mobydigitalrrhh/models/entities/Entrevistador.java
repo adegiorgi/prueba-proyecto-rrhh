@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,12 +25,12 @@ public class Entrevistador implements Serializable {
 	private String nombre;
 
 	@JoinColumn(name = "id_puesto", referencedColumnName = "id_puesto")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne( fetch = FetchType.EAGER)
 	private Puesto puesto;
 
 
 	@JoinColumn(name = "email", referencedColumnName = "email")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private Usuario usaurio;
 
 	

@@ -30,7 +30,7 @@ public class Localidad implements Serializable {
 	private String nombre;
 
 	@JoinColumn(name = "id_provincia", referencedColumnName = "id_provincia")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne( fetch = FetchType.EAGER)
 	private Provincia provincia;
 
 	@OneToMany(mappedBy = "localidad", fetch = FetchType.LAZY)

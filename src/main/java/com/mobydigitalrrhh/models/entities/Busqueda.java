@@ -6,11 +6,13 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -24,19 +26,19 @@ public class Busqueda implements Serializable {
 	private Integer idBusqueda;
 
 	@JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Empresa empresa;
 
 	@JoinColumn(name = "id_prioridad", referencedColumnName = "id_prioridad")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Prioridad prioridad;
 
 	@JoinColumn(name = "id_provincia", referencedColumnName = "id_provincia")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Provincia provincia;
 
 	@JoinColumn(name = "id_equipo", referencedColumnName = "id_equipo")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Equipo equipo;
 
 	@NotBlank(message = "El campo fechaInicio no puede quedar vacío")

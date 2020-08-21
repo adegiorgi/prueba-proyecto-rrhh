@@ -27,11 +27,11 @@ public class Experiencia implements Serializable {
 	private Integer idExperiencia;
 
 	@JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Empresa empresa;
 
 	@JoinColumn(name = "id_candidato", referencedColumnName = "id_candidato")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Candidato candidato;
 
 	@NotBlank(message = "El campo fecha inicio no puede estar vacío")

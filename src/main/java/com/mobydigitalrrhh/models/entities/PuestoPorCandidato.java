@@ -23,11 +23,11 @@ public class PuestoPorCandidato implements Serializable {
 	private Integer idPuestoPorCandidato;
 
 	@JoinColumn(name = "id_puesto", referencedColumnName = "id_puesto")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne( fetch = FetchType.EAGER)
 	private Puesto puesto;
 
 	@JoinColumn(name = "id_candidato", referencedColumnName = "id_candidato")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne( fetch = FetchType.LAZY)
 	private Candidato candidato;
 
 	public Integer getIdPuestoPorCandidato() {

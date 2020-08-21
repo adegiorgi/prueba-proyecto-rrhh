@@ -23,11 +23,11 @@ public class CandidatoPorHardSkill implements Serializable {
 	private Integer idCandidatoPorHardSkill;
 
 	@JoinColumn(name = "id_candidato", referencedColumnName = "id_candidato")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Candidato candidato;
 
 	@JoinColumn(name = "id_hard_skill", referencedColumnName = "id_hard_skill")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne( fetch = FetchType.LAZY)
 	private HardSkill hardSkill;
 
 	private String observacion;

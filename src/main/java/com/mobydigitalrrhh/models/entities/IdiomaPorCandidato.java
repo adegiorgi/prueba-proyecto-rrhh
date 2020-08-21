@@ -23,15 +23,15 @@ public class IdiomaPorCandidato implements Serializable {
 	private Integer idIdiomaPorCandidato;
 
 	@JoinColumn(name = "id_idioma", referencedColumnName = "id_idioma")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne( fetch = FetchType.EAGER)
 	private Idioma idioma;
 
 	@JoinColumn(name = "id_nivel_idioma", referencedColumnName = "id_nivel_idioma")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne( fetch = FetchType.EAGER)
 	private NivelIdioma nivelIdioma;
 
 	@JoinColumn(name = "id_candidato", referencedColumnName = "id_candidato")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Candidato candidato;
 	
 	public Integer getIdIdiomaPorCandidato() {
