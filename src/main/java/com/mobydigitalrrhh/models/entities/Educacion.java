@@ -24,15 +24,15 @@ public class Educacion implements Serializable {
 	private Integer idEducacion;
 
 	@JoinColumn(name = "id_tipo_esudio", referencedColumnName = "id_tipo_estudio")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private TipoEstudio tipoEstudio;
 
 	@JoinColumn(name = "id_institucion", referencedColumnName = "id_institucion")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne( fetch = FetchType.EAGER)
 	private Institucion institucion;
 
 	@JoinColumn(name = "id_candidato", referencedColumnName = "id_candidato")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne( fetch = FetchType.LAZY)
 	private Candidato candidato;
 
 	private boolean estado;

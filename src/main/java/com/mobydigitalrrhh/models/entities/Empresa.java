@@ -37,10 +37,10 @@ public class Empresa implements Serializable {
 	private String direccion;
 
 	@JoinColumn(name = "id_localidad", referencedColumnName = "id_localidad")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne( fetch = FetchType.LAZY)
 	private Localidad localidad;
 
-	@OneToMany(mappedBy = "empresa", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy = "empresa", fetch=FetchType.LAZY ,orphanRemoval = true)
 	private List<Busqueda> busquedas;
 	
 	@OneToMany(mappedBy = "empresa", fetch=FetchType.LAZY)

@@ -99,6 +99,13 @@ public class PersonaRestController {
 		return new ResponseEntity<Object>(respuesta, HttpStatus.CREATED);
 	}
 
+	
+	
+	
+	
+	
+	
+	
 	@DeleteMapping(value = "/formulario/{id_persona}")
 	public ResponseEntity<Object> eliminarPersona(@PathVariable Integer id_persona) {
 		Map<String, Object> respuesta = new HashMap<>();

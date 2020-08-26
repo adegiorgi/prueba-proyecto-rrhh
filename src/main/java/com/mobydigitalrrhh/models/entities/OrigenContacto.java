@@ -26,7 +26,7 @@ public class OrigenContacto implements Serializable {
 	@NotBlank(message = "El campo nombre no puede estar vacío")
 	private String nombre;
 
-	@OneToMany(mappedBy = "origenContacto", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "origenContacto", fetch = FetchType.EAGER)
 	private List<Candidato> candidatos;
 
 	public List<Candidato> getCandidatos() {

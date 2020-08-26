@@ -1,5 +1,8 @@
 package com.mobydigitalrrhh.models.views;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserToken {
 
 	private String email;
@@ -9,8 +12,20 @@ public class UserToken {
 	private String appToken;
 	private String authToken;
 	
+	List<RolView> roles;
+
+	public UserToken() {
+		this.roles= new ArrayList<>();
+	}
 	
-	
+	public List<RolView> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<RolView> roles) {
+		this.roles = roles;
+	}
+
 	public String getEmail() {
 		return email;
 	}

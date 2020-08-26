@@ -25,11 +25,11 @@ public class HardSkill implements Serializable {
 	private String nombre;
 
 	@JoinColumn(name = "id_seniority", referencedColumnName = "id_seniority")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Seniority seniority;
 
 	@JoinColumn(name = "id_tipo_hardskill", referencedColumnName = "id_tipo_hardskill")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private TipoHardSkill tipoHardSkill;
 
 	@OneToMany(mappedBy = "hardSkill" , fetch = FetchType.LAZY)

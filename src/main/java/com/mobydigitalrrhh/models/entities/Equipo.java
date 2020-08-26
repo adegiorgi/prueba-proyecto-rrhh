@@ -25,8 +25,6 @@ public class Equipo implements Serializable {
 	@NotBlank(message = "El campo nombre no puede estar vacío")
 	private String nombre;
 
-	@OneToMany(mappedBy = "equipo", fetch = FetchType.LAZY)
-	private List<Busqueda> busquedas;
 
 	@OneToMany(mappedBy = "equipo")
 	private List<PuestoPorEquipo> puestoPorEquipos;
@@ -39,13 +37,7 @@ public class Equipo implements Serializable {
 		this.puestoPorEquipos = puestoPorEquipos;
 	}
 
-	public List<Busqueda> getBusquedas() {
-		return busquedas;
-	}
 
-	public void setBusquedas(List<Busqueda> busquedas) {
-		this.busquedas = busquedas;
-	}
 
 	public Integer getIdEquipo() {
 		return idEquipo;

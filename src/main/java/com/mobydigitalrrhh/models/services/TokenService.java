@@ -1,5 +1,6 @@
 package com.mobydigitalrrhh.models.services;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.gson.Gson;
 import com.mobydigitalrrhh.configuration.OAuthProperties;
 import com.mobydigitalrrhh.google.GoogleChecker;
 import com.mobydigitalrrhh.models.entities.TokenDeUsuario;
@@ -23,6 +25,7 @@ import com.mobydigitalrrhh.models.entities.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import net.minidev.json.JSONObject;
 
 @Service
 public class TokenService {
@@ -37,6 +40,8 @@ public class TokenService {
 
 	@Autowired
 	private TokenDeUsuarioServiceImp tokenDeUsuarioService;
+	
+	private Gson gson = new Gson();
 
 	public boolean isAuthenticatedToken() {
 		// TODO implement method
@@ -68,7 +73,8 @@ public class TokenService {
 			// verificar si jwtObject.getEmail() existe en la bd.. sino existe hay que
 			// crearlo con su rol por defecto retornar siempre el usuario
 			// FALTA ASIGNACION DE ROLES!
-			usuario = usuarioService.findByEmail(jwtObject.getEmail());
+			usuario = usuarioService.findByEmail(jwtObject.getEmail());			
+			
 			if (usuario == null) {
 				try {
 					crearUsuario(usuario, jwtObject, token, tokenDeUsuario);

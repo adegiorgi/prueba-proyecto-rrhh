@@ -14,8 +14,13 @@ import javax.persistence.Table;
 
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "roles")
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 public class Rol implements Serializable {
 
 	@Id
@@ -27,7 +32,7 @@ public class Rol implements Serializable {
 	private String nombre;
 	private String descripcion;
 	
-	//@OneToMany(mappedBy = "rol")
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "rol", orphanRemoval = true)
 	private List<UsuarioPorRol> usuarioPorRoles;
 	

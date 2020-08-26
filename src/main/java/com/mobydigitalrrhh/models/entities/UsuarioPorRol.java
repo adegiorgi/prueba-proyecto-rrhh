@@ -15,8 +15,16 @@ import javax.persistence.Table;
 
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.FetchProfile;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "UsuarioXRol")
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 public class UsuarioPorRol implements Serializable {
 
 	@Id
@@ -25,14 +33,11 @@ public class UsuarioPorRol implements Serializable {
 	@NotBlank
 	private Integer idUsuarioPorRol;
 
-	//@JoinColumn(name = "email", referencedColumnName = "email")
-	//@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	// usuario_email
 	@ManyToOne
-	//usuario_email
+	@JsonBackReference
 	private Usuario usuario;
 
-	//@JoinColumn(name = "id_rol", referencedColumnName = "id_rol")
-	//@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@ManyToOne
 	private Rol rol;
 

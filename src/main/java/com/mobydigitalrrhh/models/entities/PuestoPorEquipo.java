@@ -23,11 +23,11 @@ public class PuestoPorEquipo implements Serializable {
 	private Integer idPuestoPorEquipo;
 
 	@JoinColumn(name = "id_puesto", referencedColumnName = "id_puesto")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Puesto puesto;
 
 	@JoinColumn(name = "id_equipo", referencedColumnName = "id_equipo")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne( fetch = FetchType.EAGER)
 	private Equipo equipo;
 
 	public Integer getIdPuestoPorEquipo() {
