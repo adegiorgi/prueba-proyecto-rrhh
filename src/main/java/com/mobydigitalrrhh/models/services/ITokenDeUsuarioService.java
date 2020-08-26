@@ -12,6 +12,6 @@ public interface ITokenDeUsuarioService {
 
 	 public TokenDeUsuario crearTokenDeUsuario(TokenDeUsuario tokenDeUsuario);
 
-	public UserToken getUserTokenView(String email);
+	 public UserToken getUserTokenView(String email);
 	
 }

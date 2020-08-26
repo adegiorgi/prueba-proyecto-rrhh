@@ -67,7 +67,7 @@ public class Candidato implements Serializable {
 
 	private String observacion;
 
-	@JoinColumn(name="id_perfilado", referencedColumnName = "id_perfilado")
+	@JoinColumn(name= "id_perfilado", referencedColumnName = "id_perfilado")
 	@ManyToOne
 	private Perfilado perfilado;
 	
@@ -95,6 +95,17 @@ public class Candidato implements Serializable {
 	@OneToMany(mappedBy = "candidato", fetch = FetchType.LAZY)
 	private List<PuestoPorCandidato> puestoPorCandidatos;
 	
+	
+
+
+	public Perfilado getPerfilado() {
+		return perfilado;
+	}
+
+	public void setPerfilado(Perfilado perfilado) {
+		this.perfilado = perfilado;
+	}
+
 	public List<PuestoPorCandidato> getPuestoPorCandidatos() {
 		return puestoPorCandidatos;
 	}
