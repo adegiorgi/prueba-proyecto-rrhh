@@ -1,13 +1,11 @@
 package com.mobydigitalrrhh.models.services;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.mobydigitalrrhh.models.dao.ITokenDeUsuarioDAO;
-import com.mobydigitalrrhh.models.entities.Rol;
 import com.mobydigitalrrhh.models.entities.TokenDeUsuario;
 import com.mobydigitalrrhh.models.entities.Usuario;
 import com.mobydigitalrrhh.models.entities.UsuarioPorRol;
