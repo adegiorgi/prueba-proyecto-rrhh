@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,17 +19,17 @@ public class Perfilado implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id_pefilado")
+	@Column(name = "id_perfilado")
 	private Integer idPerfilado;
 	
 	private String nombre;
 	
 	private String descripcion;
 
-	@JoinColumn(name = "id_candidato", referencedColumnName = "id_candidato")
-	@OneToMany
-	private List<Candidato> candidatos;
 	
+	@OneToMany(mappedBy = "perfilado", fetch = FetchType.LAZY)
+	private List<Candidato> candidatos;
+		
 
 	public Integer getIdPerfilado() {
 		return idPerfilado;
@@ -37,6 +38,7 @@ public class Perfilado implements Serializable {
 	public void setIdPerfilado(Integer idPerfilado) {
 		this.idPerfilado = idPerfilado;
 	}
+
 
 	public List<Candidato> getCandidatos() {
 		return candidatos;
