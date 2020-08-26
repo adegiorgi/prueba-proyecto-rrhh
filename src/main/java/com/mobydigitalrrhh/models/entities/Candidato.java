@@ -67,6 +67,10 @@ public class Candidato implements Serializable {
 
 	private String observacion;
 
+	@JoinColumn(name="id_perfilado", referencedColumnName = "id_perfilado")
+	@ManyToOne
+	private Perfilado perfilado;
+	
 	@Column(name = "fecha_nacimiento")
 	private Date fecNac;
 
