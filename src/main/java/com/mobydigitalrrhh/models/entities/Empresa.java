@@ -46,6 +46,19 @@ public class Empresa implements Serializable {
 	@OneToMany(mappedBy = "empresa", fetch=FetchType.LAZY)
 	private List<Experiencia> experiencias;
 	
+	@OneToMany(mappedBy = "empresa", fetch=FetchType.LAZY)
+	private List<EncargadoEmpresa> encargadoEmpresa;
+	
+	
+	
+	public List<EncargadoEmpresa> getEncargadoEmpresa() {
+		return encargadoEmpresa;
+	}
+
+	public void setEncargadoEmpresa(List<EncargadoEmpresa> encargadoEmpresa) {
+		this.encargadoEmpresa = encargadoEmpresa;
+	}
+
 	public List<Experiencia> getExperiencias() {
 		return experiencias;
 	}
